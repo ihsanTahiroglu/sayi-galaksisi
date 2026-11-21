@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sayı Galaksisi • Çok Basamaklı Doğal Sayılar • 5. Sınıf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--card:#fff;--ink:#1E1B4B;--muted:#55557A;--pri:#6D28D9;--pri-d:#4C1D95;--pri-l:#EDE9FE;--acc:#F97316;--acc-l:#FFEDD5;--ok:#15803D;--ok-l:#DCFCE7;--bad:#DC2626;--bad-l:#FEE2E2;--line:#DDD6FE;--g0:#DC2626;--g1:#0284C7;--g2:#7C3AED;--g3:#DB2777}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:clamp(15px,.55vw + 10px,22px)}
+body{font-family:'Nunito','Segoe UI',system-ui,sans-serif;font-weight:700;color:var(--ink);min-height:100vh;background:radial-gradient(1100px 600px at 85% -10%,#3B1A7A 0%,transparent 60%),radial-gradient(900px 520px at -10% 110%,#0E3A5C 0%,transparent 60%),#0B1026;background-attachment:fixed;overflow-x:hidden}
+#stars,#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
+#stars{z-index:0}#fx{z-index:50}
+.wrap{position:relative;z-index:1;max-width:1600px;margin:0 auto;padding:14px 18px 48px}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+/* header */
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;color:#fff;margin-bottom:12px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FDE68A,#F97316 55%,#9A3412);box-shadow:0 0 30px rgba(249,115,22,.6);position:relative;flex:none}
+.logo::after{content:'';position:absolute;left:-10px;right:-10px;top:24px;height:10px;border:3px solid rgba(255,255,255,.8);border-radius:50%;transform:rotate(-18deg)}
+h1{font-size:1.65rem;font-weight:900;letter-spacing:.3px;line-height:1.1}
+.sub{opacity:.85;font-size:.9rem;font-weight:700}
+.hbtns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:10px 16px;border-radius:14px;border:2px solid var(--line);background:#fff;color:var(--ink);font-weight:800;font-size:1rem;transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.btn:focus-visible,.opt:focus-visible,.tab:focus-visible,.key:focus-visible{outline:4px solid var(--acc);outline-offset:2px}
+.btn-p{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn-a{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn-g{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn-ghost{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.35);color:#fff}
+.btn.big{min-height:60px;font-size:1.2rem;padding:12px 26px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.seg{display:inline-flex;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.3);border-radius:14px;overflow:hidden}
+.seg button{border:0;background:transparent;color:#fff;font-weight:800;font-size:.95rem;padding:10px 14px;min-height:46px}
+.seg button.on{background:#fff;color:var(--pri-d)}
+/* tabs */
+.tabs{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.tab{flex:1;min-width:170px;min-height:58px;border-radius:16px;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-weight:900;font-size:1.05rem;padding:10px 12px}
+.tab.on{background:#fff;color:var(--pri-d);border-color:#fff;box-shadow:0 8px 24px rgba(109,40,217,.45)}
+.card{background:var(--card);border-radius:22px;padding:20px;box-shadow:0 14px 40px rgba(0,0,0,.25)}
+.ct{font-size:1.25rem;font-weight:900;color:var(--pri-d);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.muted{color:var(--muted);font-weight:700}
+/* map */
+.maptop{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:14px}
+.hero h2{font-size:1.5rem;font-weight:900;color:var(--pri-d);margin-bottom:6px}
+.hero p{color:var(--muted);line-height:1.5}
+.namebox{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+input[type=text],select{font-family:inherit;font-weight:800;font-size:1.05rem;min-height:50px;padding:8px 14px;border:2px solid var(--line);border-radius:12px;color:var(--ink);background:#fff}
+input[type=text]:focus,select:focus{outline:3px solid var(--acc);border-color:var(--acc)}
+.tani{background:linear-gradient(135deg,#4C1D95,#6D28D9);color:#fff}
+.tani h3{font-size:1.3rem;font-weight:900;margin-bottom:6px}
+.tani p{opacity:.9;line-height:1.45;margin-bottom:12px}
+.planets{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.pcard{background:#fff;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);position:relative;overflow:hidden}
+.pcard .ph{display:flex;gap:14px;align-items:center}
+.pcard h3{font-size:1.25rem;font-weight:900}
+.pcard .gv{font-size:.9rem;color:var(--pri);font-weight:900}
+.pcard p{font-size:.92rem;color:var(--muted);line-height:1.4;flex:1}
+.pcard .pb{display:flex;gap:8px}
+.pcard .pb .btn{flex:1;min-height:50px;font-size:.95rem;padding:8px 10px}
+.stars{color:#F59E0B;font-size:1.25rem;letter-spacing:2px}
+.stars .off{color:#D4D4D8}
+.mbar{height:8px;background:#EEE;border-radius:9px;overflow:hidden}
+.mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),#FACC15)}
+.planet{width:66px;height:66px;border-radius:50%;flex:none;position:relative;box-shadow:inset -10px -8px 18px rgba(0,0,0,.35),0 0 18px rgba(255,255,255,.15)}
+.planet.sm{width:42px;height:42px}
+.p-merkur{background:radial-gradient(circle at 35% 30%,#E5E7EB,#9CA3AF 55%,#4B5563)}
+.p-venus{background:radial-gradient(circle at 35% 30%,#FEF3C7,#F59E0B 55%,#92400E)}
+.p-dunya{background:radial-gradient(circle at 35% 30%,#BAE6FD,#0284C7 50%,#065F46)}
+.p-mars{background:radial-gradient(circle at 35% 30%,#FECACA,#DC2626 55%,#7F1D1D)}
+.p-jupiter{background:repeating-linear-gradient(170deg,#FDBA74 0 7px,#C2410C 7px 11px,#FED7AA 11px 16px)}
+.p-saturn{background:radial-gradient(circle at 35% 30%,#FEF9C3,#EAB308 55%,#854D0E)}
+.p-saturn::after{content:'';position:absolute;left:-14px;right:-14px;top:42%;height:22%;border:4px solid #CA8A04;border-radius:50%;transform:rotate(-20deg)}
+.planet.sm.p-saturn::after{left:-9px;right:-9px;border-width:3px}
+.p-uranus{background:radial-gradient(circle at 35% 30%,#CFFAFE,#06B6D4 55%,#155E75)}
+.p-neptun{background:radial-gradient(circle at 35% 30%,#BFDBFE,#2563EB 55%,#1E3A8A)}
+.p-pluton{background:radial-gradient(circle at 35% 30%,#F5F5F4,#A8A29E 55%,#57534E)}
+.badge{display:inline-block;background:var(--acc-l);color:#9A3412;font-weight:900;font-size:.8rem;padding:4px 10px;border-radius:99px}
+details.teach{margin-top:14px;color:#fff;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);border-radius:18px;padding:12px 16px}
+details.teach summary{font-weight:900;cursor:pointer;font-size:1.05rem}
+details.teach ul{margin:10px 0 0 20px;line-height:1.6;font-weight:600}
+/* game */
+.hud{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.hud .ttl{flex:1;min-width:200px}
+.hud .ttl b{display:block;font-size:1.2rem;font-weight:900;color:var(--pri-d)}
+.hud .ttl span{color:var(--muted);font-size:.9rem}
+.prog{height:14px;background:var(--pri-l);border-radius:99px;overflow:hidden;margin-top:6px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),var(--acc));transition:width .4s}
+.score{font-size:1.3rem;font-weight:900;color:var(--ok);background:var(--ok-l);padding:8px 14px;border-radius:14px}
+.telafi{background:var(--acc-l);color:#9A3412;border-radius:12px;padding:6px 12px;font-weight:900;font-size:.9rem;margin-bottom:10px;display:inline-block}
+.qprompt{font-size:1.25rem;line-height:1.5;margin-bottom:14px}
+.qprompt p{margin-bottom:8px}
+.bignum{font-size:2.6rem;font-weight:900;letter-spacing:1px;text-align:center;margin:12px 0;color:var(--pri-d);font-variant-numeric:tabular-nums}
+.num{white-space:nowrap;font-variant-numeric:tabular-nums}
+.bignum .num,.kdisp .num,.stbig .num,.cmpn .num,.eqn .num,.cmpgrid .num{white-space:normal}
+.kdisp{flex-wrap:wrap;text-align:center}.cmpn{max-width:100%}.cmpgrid>div{flex-wrap:wrap}
+.dg.gap{margin-left:.32em}
+.dg.hl{background:#FDE68A;border-radius:8px;box-shadow:0 0 0 3px var(--acc);padding:0 .06em;color:#9A3412}
+.words{font-size:1.3rem;font-weight:900;color:var(--pri-d);background:var(--pri-l);border-radius:14px;padding:12px 16px;margin:8px 0;line-height:1.45}
+.ctx{background:#F0F9FF;border-left:6px solid var(--g1);border-radius:12px;padding:10px 14px;margin-bottom:10px;color:#0C4A6E;font-size:1.05rem}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.opts.wide{grid-template-columns:1fr}
+.opt{min-height:66px;border-radius:16px;border:3px solid var(--line);background:#fff;font-weight:900;font-size:1.25rem;color:var(--ink);padding:12px 14px;text-align:center;line-height:1.35;transition:transform .1s,border-color .1s}
+.opts.wide .opt{text-align:left;font-size:1.1rem}
+.opt:hover{border-color:var(--pri);transform:translateY(-2px)}
+.opt.right{background:var(--ok-l);border-color:var(--ok);color:#14532D}
+.opt.wrong{background:var(--bad-l);border-color:var(--bad);color:#7F1D1D}
+.locked .opt,.locked .key,.locked .cardb,.locked .abb,.locked .ordb,.locked .cmpb{pointer-events:none}
+.locked .opt:not(.right):not(.wrong){opacity:.55}
+/* keypad */
+.kwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.kdisp{min-height:76px;min-width:min(520px,100%);border:3px dashed var(--pri);border-radius:16px;font-size:2.4rem;font-weight:900;color:var(--pri-d);display:flex;align-items:center;justify-content:center;padding:6px 14px;background:#FAF5FF}
+.kdisp .ph{font-size:1.1rem;color:#A78BFA}
+.kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(420px,100%)}
+.key{min-height:68px;border-radius:16px;border:2px solid var(--line);background:#fff;font-size:1.7rem;font-weight:900;color:var(--ink);box-shadow:0 4px 0 #DDD6FE}
+.key:active{transform:translateY(3px);box-shadow:none}
+.key.ok{background:var(--ok);border-color:var(--ok);color:#fff;font-size:1.2rem;box-shadow:0 4px 0 #14532D}
+.key.del{background:var(--acc-l);font-size:1.4rem}
+.kclear{font-size:.9rem;color:var(--muted);background:none;border:0;text-decoration:underline;font-weight:800;min-height:36px}
+/* cmp */
+.cmprow{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:10px 0 18px}
+.cmpn{font-size:2.1rem;font-weight:900;background:var(--pri-l);border-radius:16px;padding:12px 18px;color:var(--pri-d)}
+.cmpq{width:78px;height:78px;border-radius:50%;border:4px dashed var(--acc);display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:900;color:var(--acc)}
+.cmpbtns{display:flex;justify-content:center;gap:14px}
+.cmpb{width:96px;height:84px;border-radius:18px;border:3px solid var(--line);background:#fff;font-size:2.6rem;font-weight:900;color:var(--pri-d)}
+.cmpb:hover{border-color:var(--pri)}
+/* order */
+.ordpool,.ordsel{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0}
+.ordb{min-height:60px;padding:10px 16px;border-radius:14px;border:3px solid var(--line);background:#fff;font-size:1.3rem;font-weight:900;color:var(--ink)}
+.ordb.used{opacity:.3;pointer-events:none}
+.ordsel{min-height:74px;border:3px dashed var(--line);border-radius:16px;padding:8px;align-items:center}
+.chip{background:var(--pri);color:#fff;border-radius:12px;padding:10px 14px;font-weight:900;font-size:1.15rem;display:inline-flex;gap:8px;align-items:center}
+.chip i{font-style:normal;background:#fff;color:var(--pri);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem}
+.sym{font-size:1.6rem;font-weight:900;color:var(--acc)}
+/* cards */
+.cards{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0 14px}
+.cardb{width:62px;height:82px;border-radius:12px;border:0;background:linear-gradient(160deg,#312E81,#4C1D95);color:#fff;font-size:2.2rem;font-weight:900;box-shadow:0 5px 0 #1E1B4B}
+.cardb.used{opacity:.2;pointer-events:none}
+.slots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px}
+.slot{width:58px;height:76px;border-radius:12px;border:3px dashed #A78BFA;background:#FAF5FF;font-size:2rem;font-weight:900;color:var(--pri-d);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.slot.f{border-style:solid;background:#fff}
+.slot.gsp{margin-left:14px}
+/* abacus */
+.abwrap{overflow-x:auto;padding:4px 2px 8px;display:flex}
+.abx{margin:0 auto;display:inline-flex;flex:none;align-items:flex-end;background:linear-gradient(#FFF7ED,#FFEDD5);border-radius:16px;padding:10px 12px 8px;border:2px solid #FDBA74}
+.abcol{display:flex;flex-direction:column;align-items:center;width:58px}
+.abcol .rod{width:58px;height:190px;display:block;cursor:pointer}
+.abcol .wood{width:100%;height:16px;background:#B45309;box-shadow:inset 0 3px 0 #D97706}
+.abcol:first-child .wood{border-radius:8px 0 0 8px}.abcol:last-child .wood{border-radius:0 8px 8px 0}
+.ablab{font-size:.68rem;font-weight:900;margin-top:4px;text-align:center;line-height:1.1;min-height:1.6em}
+.abbs{display:flex;gap:3px;margin-top:4px}
+.abx.ro .abcol,.abx.ro .rod{width:46px}
+.abb{width:27px;height:40px;border-radius:8px;border:2px solid #FDBA74;background:#fff;font-weight:900;font-size:1rem;color:#9A3412;padding:0}
+/* place table */
+.ptwrap{overflow-x:auto;margin:10px 0}
+.pt{border-collapse:collapse;margin:0 auto;font-weight:900}
+.pt th{color:#fff;font-size:.78rem;padding:6px 4px;border:2px solid #fff}
+.pt td{border:2px solid #E5E7EB;text-align:center;min-width:42px}
+.pt td.pn{writing-mode:vertical-rl;transform:rotate(180deg);font-size:.72rem;height:108px;padding:4px 2px;color:#475569;font-weight:800}
+.pt tr.pd td{font-size:1.7rem;height:52px}
+.pt tr.pv td{font-size:.66rem;color:#475569;padding:4px 2px;writing-mode:vertical-rl;transform:rotate(180deg);height:120px}
+.pt td.gl{border-left:4px solid #94A3B8}
+.pt td.hl{background:#FEF3C7;box-shadow:inset 0 0 0 3px var(--acc)}
+.pt td.click{cursor:pointer}
+.pt td.click:hover{background:#F5F3FF}
+/* egypt */
+.egbox{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:#FEF3C7;border:2px solid #F59E0B;border-radius:14px;padding:12px;justify-content:center;min-height:80px}
+.egg{display:inline-flex;flex-wrap:wrap;gap:1px;max-width:160px;align-items:flex-end}
+.eglegend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:8px;font-size:.8rem}
+.eglegend span{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid #FCD34D;border-radius:10px;padding:2px 8px}
+/* feedback */
+.fb{margin-top:16px;border-radius:18px;padding:16px;border:3px solid}
+.fb.ok{background:var(--ok-l);border-color:var(--ok)}
+.fb.bad{background:#FFF7ED;border-color:var(--acc)}
+.fbh{font-size:1.4rem;font-weight:900;margin-bottom:6px}
+.fb.ok .fbh{color:var(--ok)}.fb.bad .fbh{color:#C2410C}
+.fbu,.fba{font-size:1.1rem;margin:4px 0}
+.tip{background:#fff;border-radius:12px;padding:10px 12px;margin:10px 0;border-left:6px solid var(--acc);line-height:1.45}
+.fb details{margin:8px 0 12px}
+.fb summary{cursor:pointer;font-weight:900;color:var(--pri-d)}
+.exp{margin-top:8px;line-height:1.55;font-size:1.02rem}
+/* end */
+.endbox{text-align:center;padding:10px}
+.endbox .bigstars{font-size:4rem;letter-spacing:8px;color:#F59E0B}
+.endbox .bigstars .off{color:#E4E4E7}
+.endbox h2{font-size:1.8rem;font-weight:900;color:var(--pri-d);margin:6px 0}
+.endbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.taglist{text-align:left;max-width:820px;margin:14px auto 0}
+.tagitem{background:#FFF7ED;border-radius:14px;padding:12px 14px;margin-bottom:10px;border-left:6px solid var(--acc)}
+.tagitem b{color:#9A3412}
+.tagitem .btn{margin-top:8px;min-height:44px;font-size:.92rem}
+/* lab */
+.labtop{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.labin{font-size:1.6rem!important;font-weight:900!important;min-height:60px!important;width:min(460px,100%);letter-spacing:1px}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.presets button{border:2px solid var(--line);background:#fff;border-radius:99px;padding:6px 12px;font-weight:800;font-size:.85rem;min-height:40px;color:var(--ink)}
+.labgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.labgrid .full{grid-column:1/-1}
+.labgrid>*,.rgrid>*,.maptop>*{min-width:0}
+.pane{border:2px solid var(--line);border-radius:18px;padding:14px;background:#fff;transition:box-shadow .3s}
+.pane.focus{box-shadow:0 0 0 5px var(--acc)}
+.pane h3{font-size:1.1rem;font-weight:900;color:var(--pri-d);margin-bottom:10px}
+.info{background:var(--pri-l);border-radius:12px;padding:10px 12px;font-size:1.05rem;line-height:1.45;margin-top:8px;min-height:46px}
+.bchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.bchip{border-radius:12px;padding:8px 12px;color:#fff;font-weight:900}
+.mono{font-variant-numeric:tabular-nums;line-height:1.7}
+.scale{display:block;margin:0 auto;max-width:440px;width:100%}
+.beam{transition:transform .6s cubic-bezier(.3,1.6,.5,1);transform-origin:220px 70px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+/* class */
+.teamsel{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:10px 0}
+.skchk{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.skchk label{display:inline-flex;align-items:center;gap:6px;background:var(--pri-l);border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer;min-height:44px}
+.skchk input{width:20px;height:20px}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.team{border-radius:18px;padding:12px;color:#fff;text-align:center;opacity:.6;transition:.25s;border:4px solid transparent}
+.team.on{opacity:1;transform:scale(1.04);border-color:#fff;box-shadow:0 0 0 4px var(--acc),0 10px 30px rgba(0,0,0,.35)}
+.team b{display:block;font-size:2.2rem;font-weight:900}
+.team span{font-weight:900}
+.turn{font-size:1.4rem;font-weight:900;text-align:center;margin-bottom:10px}
+.tbar{height:12px;background:#F1F5F9;border-radius:99px;overflow:hidden;margin-bottom:12px}
+.tbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--ok),#FACC15,var(--bad))}
+.podium{display:flex;flex-direction:column;gap:10px;max-width:640px;margin:10px auto}
+.pod{display:flex;align-items:center;gap:12px;border-radius:16px;padding:12px 16px;color:#fff;font-size:1.3rem;font-weight:900}
+.pod em{font-style:normal;font-size:2rem}
+.pod .sc{margin-left:auto}
+/* report */
+.rgrid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}
+.skrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;margin-bottom:12px}
+.skrow .nm{font-weight:900;font-size:.98rem}
+.skrow .bar{height:16px;background:#F1F5F9;border-radius:99px;overflow:hidden;margin-top:4px}
+.skrow .bar i{display:block;height:100%}
+.skrow .pc{text-align:right;font-weight:900}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--pri-l);border-radius:16px;padding:12px;text-align:center}
+.kpi b{display:block;font-size:2rem;font-weight:900;color:var(--pri-d)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1E1B4B;color:#fff;padding:12px 20px;border-radius:14px;font-weight:800;z-index:60;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+/* ===== LAB HUB & STATIONS ===== */
+.hubhead{display:grid;grid-template-columns:minmax(0,1.5fr) auto;gap:16px;align-items:center;margin-bottom:14px}
+.hubhead #hubNova{grid-column:1/-1}
+.hubtxt h2{font-size:1.7rem;font-weight:900;color:var(--pri-d);margin:2px 0 6px}
+.hubtxt p{color:var(--muted);line-height:1.5}
+.hubprog{background:var(--pri-l);border-radius:18px;padding:14px 22px;text-align:center;color:var(--pri-d)}
+.hubprog b{display:block;font-size:2.4rem;font-weight:900;line-height:1}
+.stno{display:inline-block;font-size:.78rem;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--acc)}
+.stations{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.sttile{text-align:left;background:#fff;border:0;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:6px;box-shadow:0 12px 34px rgba(0,0,0,.28);transition:transform .15s,box-shadow .15s;color:var(--ink);font-family:inherit}
+.sttile:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(109,40,217,.45)}
+.sttile:focus-visible{outline:4px solid var(--acc);outline-offset:3px}
+.stth{background:linear-gradient(135deg,#F5F3FF,#FFF7ED);border-radius:16px;padding:10px;margin-bottom:6px}
+.stth svg{display:block;width:100%;height:110px}
+.sttile h3{font-size:1.25rem;font-weight:900}
+.sttile p{font-size:.92rem;color:var(--muted);line-height:1.4;flex:1}
+.stfoot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.dots5{display:inline-flex;gap:5px}.dots5 i{width:12px;height:12px;border-radius:50%;background:#E4E4E7}.dots5 i.ok{background:var(--ok)}
+.medal{font-size:.8rem;font-weight:900;padding:4px 10px;border-radius:99px;color:#fff}
+.medal.m0{background:#B87333}.medal.m1{background:#94A3B8}.medal.m2{background:#EAB308}
+.st{padding:18px}
+.sthead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:2px solid #F1F0FB;padding-bottom:14px;margin-bottom:14px}
+.stic{width:92px;flex:none;background:linear-gradient(135deg,#F5F3FF,#FFF7ED);border-radius:14px;padding:6px}
+.stic svg{display:block;width:100%}
+.stt{flex:1;min-width:200px}.stt h2{font-size:1.5rem;font-weight:900;color:var(--pri-d);line-height:1.15}.stt p{color:var(--muted)}
+.seg2{display:inline-flex;background:var(--pri-l);border-radius:16px;padding:4px;gap:4px}
+.seg2 button{border:0;background:transparent;font-weight:900;font-size:1rem;color:var(--pri-d);padding:10px 16px;border-radius:12px;min-height:50px}
+.seg2 button.on{background:var(--pri);color:#fff;box-shadow:0 6px 14px rgba(109,40,217,.35)}
+.stbody{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+.stmain{min-width:0}
+.stside{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px}
+.novabox{display:flex;gap:10px;align-items:flex-start}
+.novafig{width:78px;flex:none;animation:float 3.2s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+.bubble{position:relative;flex:1;background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px 14px;font-size:1.02rem;line-height:1.45;min-height:64px}
+.bubble::before{content:'';position:absolute;left:-12px;top:22px;border:9px solid transparent;border-right-color:var(--line);border-left:0}
+.bubble.pop{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(.94);opacity:.4}100%{transform:none;opacity:1}}
+.infocard{background:#FFFBEB;border:2px solid #FDE68A;border-radius:16px;padding:12px 14px}
+.infocard summary{font-weight:900;cursor:pointer;color:#92400E}
+.infocard .ic{margin-top:8px;line-height:1.5;font-size:.95rem}.infocard .ic p{margin-bottom:6px}.infocard ol{margin:0 0 6px 18px}
+.taskbar{background:linear-gradient(135deg,#4C1D95,#6D28D9);color:#fff;border-radius:18px;padding:14px 16px;margin-bottom:14px}
+.taskbar .dots{display:flex;gap:6px;margin-bottom:8px}
+.taskbar .dots i{flex:1;height:8px;border-radius:9px;background:rgba(255,255,255,.25)}
+.taskbar .dots i.cur{background:#FACC15}.taskbar .dots i.ok{background:#4ADE80}.taskbar .dots i.shown{background:#FDBA74}
+.ttext{font-size:1.2rem;line-height:1.45}.ttext .words{color:var(--pri-d)}
+.tno{display:block;font-size:.8rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;opacity:.8}
+.taskarea{margin-top:12px}.taskctl{margin-top:14px}
+.center{justify-content:center}
+.tools{display:flex;flex-direction:column;gap:10px;align-items:center;margin:12px 0}
+.tools .presets{justify-content:center;margin:0}
+.stout{text-align:center;margin:12px 0}
+.stbig{font-size:2.5rem;font-weight:900;color:var(--pri-d);font-variant-numeric:tabular-nums}
+.stbig.hid{color:#C4B5FD;letter-spacing:8px}
+.stwords{font-size:1.15rem;font-weight:800;color:var(--muted);margin-top:4px}
+/* place table station */
+.tblwrap{overflow-x:auto;display:flex;padding:4px 2px 8px}
+.tgroups{display:flex;gap:8px;margin:0 auto;flex:none}
+.tgrp{border:3px solid var(--c);border-radius:16px;overflow:hidden;background:#fff}
+.tgh{background:var(--c);color:#fff;font-weight:900;font-size:.85rem;text-align:center;padding:6px}
+.tcols{display:flex}
+.tcol{width:62px;display:flex;flex-direction:column;align-items:center;padding:6px 3px;gap:4px;border-left:1px dashed #E5E7EB}
+.tcol:first-child{border-left:0}
+.tcol.sel{background:#FEF3C7}
+.tu{width:44px;height:36px;border-radius:10px;border:2px solid var(--line);background:#fff;color:var(--pri-d);font-size:.95rem;font-weight:900}
+.tu:hover{border-color:var(--pri)}
+.td{width:52px;height:62px;border-radius:12px;border:3px solid var(--c);background:#fff;font-size:2rem;font-weight:900;color:var(--c);font-family:inherit}
+.td.lead{opacity:.28}
+.tcol.sel .td{box-shadow:0 0 0 4px var(--acc);opacity:1}
+.tn{writing-mode:vertical-rl;transform:rotate(180deg);font-size:.72rem;font-weight:800;color:#475569;height:96px;text-align:center}
+.tv{font-size:.6rem;color:#64748B;font-weight:800;writing-mode:vertical-rl;transform:rotate(180deg);height:84px}
+/* okunuş station */
+.gs{display:flex;justify-content:center;align-items:stretch;flex-wrap:wrap;margin:18px 0;gap:0;transition:gap .4s}
+.gs.split{gap:14px}
+.gbox{border-radius:16px;padding:10px 8px;text-align:center;transition:all .4s;border:3px solid transparent}
+.gdig{font-size:3rem;font-weight:900;color:var(--c);letter-spacing:2px;font-variant-numeric:tabular-nums;line-height:1.1}
+.glab,.gph{font-size:.85rem;font-weight:900;max-height:0;opacity:0;overflow:hidden;transition:all .4s}
+.gs.split .gbox{border-color:var(--c);background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.gs.split .glab{max-height:40px;opacity:1;background:var(--c);color:#fff;border-radius:8px;padding:2px 8px;margin-top:6px}
+.gs.split .gph{max-height:60px;opacity:1;color:var(--ink);margin-top:6px}
+.gbox.on{transform:scale(1.08);box-shadow:0 0 0 5px var(--acc),0 10px 26px rgba(249,115,22,.35)!important}
+.gbox.done{opacity:.55}
+.gs.quiz .gph{display:none}
+.readline{text-align:center;font-size:1.35rem;font-weight:900;line-height:1.6;min-height:2em;padding:10px;background:var(--pri-l);border-radius:16px}
+.readline .rp.cur{background:#FEF3C7;border-radius:8px;padding:0 6px}
+.sentence{min-height:70px;border:3px dashed var(--line);border-radius:16px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;background:#FAF5FF}
+.chippool{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.wchip{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:900;font-size:1.15rem;color:var(--ink);min-height:52px;box-shadow:0 3px 0 #DDD6FE}
+.wchip.on{background:var(--pri);color:#fff;border-color:var(--pri);box-shadow:none}
+.wchip.used{opacity:.25;pointer-events:none}
+.gin{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.gfield{display:flex;flex-direction:column;gap:6px;align-items:center;font-weight:900}
+.gfield span{color:#fff;border-radius:8px;padding:4px 10px;font-size:.85rem}
+.gfield input{width:120px;text-align:center;font-family:inherit;font-size:2rem;font-weight:900;border:3px solid var(--line);border-radius:14px;padding:8px;color:var(--pri-d)}
+.gfield input:focus{outline:3px solid var(--acc)}
+.opt.picked{border-color:var(--pri);background:var(--pri-l);color:var(--pri-d)}
+/* çözümleme */
+.eqline{text-align:center;font-size:1.3rem;font-weight:800;line-height:1.9;background:#F8FAFC;border-radius:16px;padding:12px;margin:10px 0}
+.eqn{font-size:1.6rem;font-weight:900}
+.qbox{display:inline-flex;min-width:56px;height:40px;align-items:center;justify-content:center;border:3px dashed var(--acc);border-radius:10px;color:var(--acc);font-weight:900;padding:0 8px;background:#FFF7ED}
+.vcards{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.vcard{background:#fff;border:3px solid var(--c);border-radius:16px;overflow:hidden;min-width:150px;text-align:center;animation:drop .5s backwards cubic-bezier(.3,1.5,.5,1)}
+.vp{background:var(--c);color:#fff;font-size:.8rem;font-weight:900;padding:4px}
+.vt{font-size:1rem;font-weight:800;color:var(--muted);padding:6px 8px 0}
+.vv{font-size:1.5rem;font-weight:900;color:var(--c);padding:0 8px 8px}
+@keyframes drop{0%{transform:translateY(-30px) scale(.8);opacity:0}}
+/* mısır */
+.papyrus{min-height:130px;background:linear-gradient(90deg,#F5DEB3,#FEF3C7 10%,#FEF3C7 90%,#F5DEB3);border:3px solid #D97706;border-radius:12px;padding:14px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:center;box-shadow:inset 0 0 30px rgba(146,64,14,.15)}
+.egs{border:0;background:transparent;padding:0;cursor:pointer;line-height:0}
+.egs:hover svg{filter:drop-shadow(0 0 3px #F97316)}
+.egpal{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+.egbtn{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid #FCD34D;background:#FFFBEB;border-radius:14px;padding:8px 10px;min-width:92px;font-weight:900;color:#7C2D12}
+.egbtn:hover{border-color:#F97316;transform:translateY(-2px)}
+.egbtn small{font-size:.7rem;color:#92400E;font-weight:800}
+/* terazi */
+.scalebox{max-width:560px;margin:6px auto}
+.swrow{margin-top:4px}.swrow select{min-height:44px;font-size:.95rem}
+.steps{max-width:640px;margin:0 auto}
+.stp{background:#F8FAFC;border-left:6px solid var(--pri);border-radius:12px;padding:10px 14px;margin-bottom:8px;line-height:1.5;animation:fadeIn .5s backwards}
+.stp.res{border-color:var(--ok);background:var(--ok-l);font-size:1.3rem;text-align:center}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(8px)}}
+.cmpgrid{margin:8px 0;font-size:1.5rem;font-weight:900;font-variant-numeric:tabular-nums}
+.cmpgrid>div{display:flex;align-items:center;gap:2px}
+.cmpgrid b{width:28px;color:var(--pri)}
+.cd{display:inline-block;width:1.05em;text-align:center;border-radius:6px}
+.cd.same{color:#94A3B8}.cd.diff{background:#FEF3C7;box-shadow:0 0 0 3px var(--acc);color:#9A3412}
+.cgap{display:inline-block;width:.4em}
+.kinfo{background:var(--pri-l);border-radius:14px;padding:10px 14px;text-align:center;margin:8px auto;max-width:720px;color:var(--ink)}
+@media (max-width:1000px){.stbody{grid-template-columns:1fr}.stside{position:static;order:-1}.hubhead{grid-template-columns:1fr}}
+@media (max-width:700px){.stt h2{font-size:1.2rem}.stic{width:64px}.seg2{width:100%}.seg2 button{flex:1}.sthead .btn{order:-1}
+ .stbig{font-size:1.8rem}.gdig{font-size:2rem}.tcol{width:44px}.td{width:38px;height:50px;font-size:1.5rem}.tu{width:34px}
+ .vcard{min-width:120px}.gfield input{width:90px;font-size:1.5rem}.egbtn{min-width:72px;padding:6px}.cmpgrid{font-size:1.1rem}.novafig{width:60px}.bubble{font-size:.95rem}}
+
+/* responsive */
+@media (max-width:1000px){.maptop,.labgrid,.rgrid{grid-template-columns:1fr}}
+@media (max-width:700px){
+ .wrap{padding:10px 10px 32px}
+ h1{font-size:1.25rem}.logo{width:44px;height:44px}.logo::after{top:17px}
+ header{flex-direction:column;align-items:stretch}
+ .hbtns{justify-content:stretch}.hbtns>*{flex:1}
+ .seg{width:100%;flex:1 1 100%}.seg button{flex:1;padding:8px 6px;font-size:.9rem}
+ .abcol{width:50px}.abcol .rod{width:50px}.abb{width:23px}
+ .abx.ro{padding:8px 6px 6px}.abx.ro .abcol,.abx.ro .rod{width:30px}.abx.ro .ablab{font-size:.5rem}
+ .tab{min-width:0;flex:1 1 45%;font-size:.92rem;min-height:52px}
+ .card{padding:14px;border-radius:18px}
+ .opts{grid-template-columns:1fr}
+ .bignum{font-size:1.9rem}
+ .qprompt{font-size:1.08rem}
+ .cmpn{font-size:1.45rem;padding:10px 12px}
+ .cmpq{width:60px;height:60px;font-size:1.8rem}
+ .cmpb{width:80px;height:70px;font-size:2.1rem}
+ .kdisp{font-size:1.8rem;min-height:64px}
+ .key{min-height:58px}
+ .cardb{width:48px;height:64px;font-size:1.7rem}
+ .slot{width:40px;height:56px;font-size:1.5rem}.slot.gsp{margin-left:8px}
+ .kpis{grid-template-columns:1fr 1fr 1fr}.kpi b{font-size:1.5rem}
+ .pt tr.pd td{font-size:1.3rem}.pt td{min-width:30px}
+}
+@media (min-width:1500px){.planets{grid-template-columns:repeat(5,1fr)}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<canvas id="fx"></canvas>
+<div class="wrap">
+ <header>
+  <div class="brand"><div class="logo" aria-hidden="true"></div>
+   <div><h1>Sayı Galaksisi: Basamak Kaşifleri</h1>
+   <div class="sub">5. Sınıf • 2. Tema: Sayılar ve Nicelikler • Çok Basamaklı Doğal Sayılar</div></div></div>
+  <div class="hbtns">
+   <div class="seg" role="group" aria-label="Seviye">
+    <button data-lv="1">🌱 9 basamak</button><button data-lv="2">🚀 12 basamak</button><button data-lv="3">🌌 50 basamak</button>
+   </div>
+   <button class="btn btn-ghost" id="sndBtn">🔊 Ses</button>
+   <button class="btn btn-ghost" id="fxBtn">✨ Hareketli arka plan</button>
+   <button class="btn btn-ghost" id="fsBtn">⛶ Tam ekran</button>
+  </div>
+ </header>
+
+ <nav class="tabs" id="tabs">
+  <button class="tab" data-v="map">🪐 Galaksi Haritası</button>
+  <button class="tab" data-v="lab">🔬 Sayı Laboratuvarı</button>
+  <button class="tab" data-v="class">🏆 Sınıf Yarışması</button>
+  <button class="tab" data-v="report">📊 Kaşif Raporu</button>
+ </nav>
+
+ <!-- MAP -->
+ <section id="v-map">
+  <div class="maptop">
+   <div class="card hero">
+    <h2>Güneş Sistemi'nde sayılar seni bekliyor!</h2>
+    <p>Dünya ile Güneş arasında <b>149 597 890 km</b> var. Bu sayıyı okuyabilir misin? Her gezegen bir görev: basamakları, bölükleri, abaküsü, çözümlemeyi ve karşılaştırmayı öğren. Yanlış yaptığın konu sana <b>telafi sorusu</b> olarak geri döner; ipuçlarıyla eksiğini kapatırsın.</p>
+    <div class="namebox"><label for="nameIn">Kaşif adın:</label><input type="text" id="nameIn" maxlength="24" placeholder="Adını yaz"></div>
+   </div>
+   <div class="card tani">
+    <h3>🧭 Tanı Görevi</h3>
+    <p>9 konudan 2'şer soru (18 soru). Bitince hangi konuda eksiğin olduğunu ve hangi gezegene gitmen gerektiğini gösterir.</p>
+    <button class="btn btn-a big" id="taniBtn">🧭 Eksiklerimi bul</button>
+   </div>
+  </div>
+  <div class="planets" id="planets"></div>
+  <details class="teach"><summary>👩‍🏫 Öğretmen notu: oyun nasıl kullanılır?</summary>
+   <ul>
+    <li><b>Ders başında:</b> Tanı Görevi'ni akıllı tahtada sınıfça çözün; Kaşif Raporu hangi konudan başlamanız gerektiğini gösterir.</li>
+    <li><b>Konu anlatımında:</b> Sayı Laboratuvarı'nda 7 ayrı istasyon var (basamak tablosu, okunuş, abaküs, çözümleme, Mısır sembolleri, terazi, kart atölyesi). Her istasyonda Keşfet modu ve 5 görevlik Görevler modu bulunur.</li><li><b>Doğrudan bağlantı:</b> Materyal bağlantısının sonuna <b>#lab-tablo</b>, <b>#lab-okunus</b>, <b>#lab-abakus</b>, <b>#lab-cozum</b>, <b>#lab-misir</b>, <b>#lab-terazi</b> ya da <b>#lab-kart</b> eklerseniz o istasyon doğrudan açılır. <b>#yarisma</b> sınıf yarışmasını açar.</li>
+    <li><b>Pekiştirme:</b> Sınıf Yarışması'nda 2–4 takım sırayla soru çözer; süre ve hız bonusu vardır.</li>
+    <li><b>Evde:</b> Öğrenci gezegen görevlerini tablet ya da telefonda oynar. İlerleme yalnızca o cihazın tarayıcısında saklanır; raporu "Kopyala" ile size iletebilir.</li>
+    <li>Sorular her seferinde yeniden üretilir. Bağlamlar sunumdaki verilerden: gezegenlerin Güneş'e uzaklıkları, TÜİK turist sayıları, yıllara göre dikilen fidan sayıları.</li>
+   </ul>
+  </details>
+ </section>
+
+ <!-- GAME -->
+ <section id="v-game" class="hidden">
+  <div class="card">
+   <div class="hud">
+    <div class="planet sm" id="gOrb"></div>
+    <div class="ttl"><b id="gTitle">Görev</b><span id="gSub"></span><div class="prog"><i id="gProg"></i></div></div>
+    <div class="score" id="gScore">✔ 0</div>
+    <button class="btn" id="gExit">✖ Çık</button>
+   </div>
+   <div id="gTelafi"></div>
+   <div id="gq"></div>
+  </div>
+ </section>
+
+ <!-- LAB -->
+ <section id="v-lab" class="hidden">
+  <div id="labHub">
+   <div class="card hubhead"><div id="hubNova"></div><div class="hubtxt"><span class="stno">Simülasyon istasyonları</span><h2>Sayı Laboratuvarı</h2><p>Her istasyon tek bir kavrama odaklanır. Önce <b>Keşfet</b> modunda serbestçe dene, sonra <b>Görevler</b> modunda 5 görevi tamamla ve rozetini kazan.</p></div><div class="hubprog" id="hubProg"></div></div>
+   <div class="stations" id="stations"></div>
+  </div>
+  <div id="labSt" class="hidden"></div>
+ </section>
+
+ <!-- CLASS -->
+ <section id="v-class" class="hidden">
+  <div class="card" id="clsSetup">
+   <div class="ct">🏆 Sınıf Yarışması: Akıllı tahtada takım oyunu</div>
+   <div class="row"><label>Takım sayısı:</label>
+    <div class="seg" style="background:var(--pri);border-color:var(--pri)" id="tcSeg"><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button></div>
+    <label style="margin-left:10px">Her takıma soru:</label>
+    <select id="clsRounds"><option>3</option><option selected>5</option><option>8</option></select>
+    <label style="margin-left:10px">Süre:</label>
+    <select id="clsTime"><option value="0">Süresiz</option><option value="30">30 sn</option><option value="45" selected>45 sn</option><option value="60">60 sn</option></select>
+   </div>
+   <div class="teamsel" id="teamNames"></div>
+   <b>Hangi gezegenlerden soru gelsin?</b>
+   <div class="skchk" id="clsSk"></div>
+   <button class="btn btn-a big" id="clsStart">🚀 Yarışmayı başlat</button>
+  </div>
+  <div class="card hidden" id="clsPlay">
+   <div class="board" id="clsBoard"></div>
+   <div class="turn" id="clsTurn"></div>
+   <div class="tbar" id="clsTbar"><i id="clsTime_i"></i></div>
+   <div id="clsQ"></div>
+   <div style="text-align:right;margin-top:10px"><button class="btn" id="clsStop">⏹ Yarışmayı bitir</button></div>
+  </div>
+ </section>
+
+ <!-- REPORT -->
+ <section id="v-report" class="hidden">
+  <div class="rgrid">
+   <div class="card"><div class="ct">📊 Kaşif Raporu <span id="rpName" class="badge"></span></div>
+    <div class="kpis" id="rpKpi"></div><div id="rpSkills"></div></div>
+   <div class="card"><div class="ct">🩺 Öğrenme eksikleri</div><div id="rpTags"></div>
+    <div class="row" style="margin-top:12px">
+     <button class="btn btn-a" id="rpTani">🧭 Tanı Görevi</button>
+     <button class="btn" id="rpCopy">📋 Raporu kopyala</button>
+     <button class="btn" id="rpReset">🗑 Sıfırla</button></div>
+   </div>
+  </div>
+ </section>
+</div>
+
+<script>
+'use strict';
+/* ================= STATE ================= */
+const KEY='sayiGalaksisi_v1';
+let S={name:'',level:2,sound:true,skills:{},stars:{}};
+try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&typeof d==='object')S=Object.assign(S,d)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+function el(t,c,h){const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
+
+/* ================= DATA ================= */
+const GROUP=['Birler','Binler','Milyonlar','Milyarlar','Trilyonlar','Katrilyonlar','Kentilyonlar','Seksilyonlar','Septilyonlar','Oktilyonlar','Nonilyonlar','Desilyonlar','Undesilyonlar','Dodesilyonlar','Tredesilyonlar','Katordesilyonlar','Kendesilyonlar'];
+const SC=['','bin','milyon','milyar','trilyon','katrilyon','kentilyon','seksilyon','septilyon','oktilyon','nonilyon','desilyon','undesilyon','dodesilyon','tredesilyon','katordesilyon','kendesilyon'];
+const PLACE=Array.from({length:51},(_,p)=>{const g=Math.floor(p/3),k=p%3;if(g===0)return ['Birler','Onlar','Yüzler'][k];return k===0?GROUP[g]:(k===1?'On ':'Yüz ')+GROUP[g].toLocaleLowerCase('tr-TR')});
+const SHORT=['Birler','Onlar','Yüzler','Binler','On bin','Yüz bin','Milyon','On mn','Yüz mn','Milyar','On mr','Yüz mr'];
+const GCOL=['#DC2626','#0284C7','#7C3AED','#DB2777','#059669','#D97706','#4F46E5','#0F766E','#BE123C','#65A30D','#0369A1','#A21CAF','#B45309','#1D4ED8','#9F1239','#047857','#7C2D12'];
+const SKILLS={
+ basamak:'Basamak ve bölük adları',abakus:'Abaküs modeli',okuma:'Sayıları okuma',yazma:'Okunuşu verilen sayıyı yazma',
+ boluk:'Bölüklerdeki sayılar',deger:'Basamak değeri',cozum:'Çözümleme ve Mısır sembolleri',karsi:'Karşılaştırma ve sıralama',kart:'Rakam kartlarıyla sayı oluşturma'};
+const PLANETS=[
+ {id:'merkur',ad:'Merkür',sk:'basamak',gv:'Basamak Avcısı',oz:'İşaretli rakam hangi basamakta? Basamak ve bölük adlarını keşfet.',lab:'tablo'},
+ {id:'venus',ad:'Venüs',sk:'abakus',gv:'Abaküs Ustası',oz:'Abaküsü oku, boncuklarla sayı kur. Boş çubuk = 0!',lab:'abakus'},
+ {id:'dunya',ad:'Dünya',sk:'okuma',gv:'Okuma Kulesi',oz:'Çok basamaklı sayıları bölük bölük doğru oku.',lab:'okunus'},
+ {id:'mars',ad:'Mars',sk:'yazma',gv:'Sayı Yazıcı',oz:'Okunuşu verilen sayıyı rakamlarla yaz; sıfırları unutma.',lab:'okunus'},
+ {id:'jupiter',ad:'Jüpiter',sk:'boluk',gv:'Bölük Bekçisi',oz:'Birler, binler, milyonlar, milyarlar bölüğündeki sayıları bul.',lab:'okunus'},
+ {id:'saturn',ad:'Satürn',sk:'deger',gv:'Değer Dedektifi',oz:'Rakam mı, basamak değeri mi? Farkı yakala.',lab:'tablo'},
+ {id:'uranus',ad:'Uranüs',sk:'cozum',gv:'Çözümleme Mühendisi',oz:'Sayıyı basamak değerlerine ayır, Mısır sembollerini çöz.',lab:'cozum'},
+ {id:'neptun',ad:'Neptün',sk:'karsi',gv:'Karşılaştırma Kaptanı',oz:'< ve > ile karşılaştır; gezegen, fidan ve turist verilerini sırala.',lab:'terazi'},
+ {id:'pluton',ad:'Plüton',sk:'kart',gv:'Kart Ustası (Bonus)',oz:'Rakam kartlarıyla en büyük, en küçük, tek ve çift sayıları kur.',lab:'kart'}];
+const PL_BY_SK={};PLANETS.forEach(p=>PL_BY_SK[p.sk]=p);
+const TAGS={
+ sifir:{ad:'Sıfırları atlama ya da fazladan yazma',ip:'Okunuşta söylenmeyen basamaklara 0 yazılır. Her bölük 3 basamaktır: "iki milyon beş bin" → 2 005 000.',sk:'yazma'},
+ bolukKayma:{ad:'Bölükleri karıştırma',ip:'Sayıyı sağdan başlayarak üçerli ayır: birler, binler, milyonlar, milyarlar bölüğü.',sk:'boluk'},
+ basamakAdi:{ad:'Basamak adlarını karıştırma',ip:'Her bölükte sıra sağdan sola birler – onlar – yüzler. Bölüğün ilk basamağının adı bölüğün adıdır (milyonlar, on milyonlar, yüz milyonlar).',sk:'basamak'},
+ rakamDeger:{ad:'Rakam ile basamak değerini karıştırma',ip:'Basamak değeri = rakam × basamağın değeri. 4 rakamı milyonlar basamağındaysa basamak değeri 4 000 000 olur.',sk:'deger'},
+ okunus:{ad:'Okurken rakam ya da bölük hatası',ip:'Soldan başlayarak her bölükteki sayıyı oku, ardından bölüğün adını söyle. Birler bölüğünün adı söylenmez.',sk:'okuma'},
+ karsilastirma:{ad:'Karşılaştırma stratejisi',ip:'Önce basamak sayılarına bak. Basamak sayıları eşitse en soldan başla; ilk farklı rakamı büyük olan sayı büyüktür.',sk:'karsi'},
+ abakus:{ad:'Abaküste boş çubuğu atlama',ip:'Boncuksuz çubuk o basamakta 0 olduğunu gösterir. Çubuğu atlarsan sayının basamakları kayar.',sk:'abakus'},
+ kartBas:{ad:'Sayıyı 0 ile başlatma',ip:'Doğal sayının en soldaki rakamı 0 olamaz. 0, ikinci sıraya konur.',sk:'kart'},
+ kartTekCift:{ad:'Tek–çift kuralı',ip:'Bir sayının tek ya da çift olduğunu birler basamağındaki rakam belirler.',sk:'kart'},
+ kartSira:{ad:'En büyük / en küçük sayı stratejisi',ip:'En büyük sayıda büyük rakamlar sola, en küçük sayıda küçük rakamlar sola yazılır (0 başa gelmez).',sk:'kart'},
+ genel:{ad:'Dikkat / işlem hatası',ip:'Soruyu yeniden oku ve cevabını basamak tablosuyla kontrol et.',sk:null}};
+const PRAISE=['Süper! ✔','Harika gidiyorsun! 🚀','Doğru! Tam bir basamak kaşifi ⭐','Mükemmel! 🌟','Aynen böyle! ✔','Roket gibi! 🚀'];
+const PL_DIST=[['Merkür',"Merkür'ün",57909175],['Venüs',"Venüs'ün",108208930],['Dünya',"Dünya'nın",149597890],['Mars',"Mars'ın",227936640],['Jüpiter',"Jüpiter'in",778412020],['Satürn',"Satürn'ün",1426725400],['Uranüs',"Uranüs'ün",2870972200],['Neptün',"Neptün'ün",4498252900]];
+const TURIST=[['Almanya',"Almanya'dan",97577],['İngiltere',"İngiltere'den",49961],['İran',"İran'dan",88056],['Rusya',"Rusya'dan",148016],['Türkmenistan',"Türkmenistan'dan",9496],['ABD',"ABD'den",41911],['Fransa',"Fransa'dan",46000],['Kırgızistan',"Kırgızistan'dan",8403]];
+const FIDAN=[[2019,13791435],[2020,4446803],[2021,5200000],[2022,4200000]];
+const CTX=[
+ ...PL_DIST.map(p=>({n:p[2],pre:`${p[1]} Güneş'e uzaklığı`,unit:' km'})),
+ ...TURIST.map(t=>({n:t[2],pre:`TÜİK'e göre 2023'ün son ayında ${t[1]} İstanbul'a gelen turist sayısı`,unit:''})),
+ ...FIDAN.map(f=>({n:f[1],pre:`${f[0]} yılında dikilen fidan sayısı`,unit:''}))];
+
+/* ================= UTIL ================= */
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const fmt=x=>String(x).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+const lenOf=n=>String(n).length;
+const B=x=>BigInt(x),P10=p=>10n**BigInt(p),pv=(d,p)=>BigInt(d)*P10(p),cmpB=(x,y)=>x<y?-1:x>y?1:0;
+const dAt=(n,p)=>{const s=String(n);return p<s.length?+s[s.length-1-p]:0};
+const setDigit=(n,p,d)=>B(n)+B(d-dAt(n,p))*P10(p);
+const lenMax=()=>S.level==1?9:S.level==3?50:12;
+const lenR=(min=5,capL=50)=>{const hi=Math.min(lenMax(),capL),lo=S.level==3?Math.min(hi,Math.max(min,13)):min;return rnd(lo,hi)};
+function randNum(L,zp=.28){let s=''+rnd(1,9);for(let i=1;i<L;i++)s+=Math.random()<zp?'0':rnd(1,9);return BigInt(s)}
+const ONES=['','bir','iki','üç','dört','beş','altı','yedi','sekiz','dokuz'];
+const TENS=['','on','yirmi','otuz','kırk','elli','altmış','yetmiş','seksen','doksan'];
+function three(n){const h=Math.floor(n/100),t=Math.floor(n/10)%10,o=n%10,a=[];if(h)a.push((h>1?ONES[h]+' ':'')+'yüz');if(t)a.push(TENS[t]);if(o)a.push(ONES[o]);return a.join(' ')}
+function words(n){const s=String(n);if(/^0*$/.test(s))return 'sıfır';const G=groupsOf(n),a=[];for(let i=G.length-1;i>=0;i--){const g=G[i];if(!g)continue;if(i===1&&g===1)a.push('bin');else a.push(three(g)+(SC[i]?' '+SC[i]:''))}return a.join(' ')}
+const cap=s=>s.charAt(0).toLocaleUpperCase('tr-TR')+s.slice(1);
+const lc=s=>s.toLocaleLowerCase('tr-TR');
+function groupsOf(n){const s=String(n),g=[];for(let e=s.length;e>0;e-=3)g.push(+s.slice(Math.max(0,e-3),e));return g.length?g:[0]}
+function fromGroups(G){let s='';for(let i=G.length-1;i>=0;i--)s+=i===G.length-1?String(G[i]):String(G[i]).padStart(3,'0');return BigInt(s)}
+const compress=n=>{const s=String(n).replace(/0/g,'');return s?BigInt(s):null};
+function numHTML(n,o={}){const s=String(n),L=s.length;let h='<span class="num">';for(let i=0;i<L;i++){const p=L-1-i,g=Math.floor(p/3),c=['dg'];if(i>0&&p%3===2)c.push('gap');if(o.hl===p)c.push('hl');const st=o.color?` style="color:${GCOL[g]}"`:'';h+=(i>0&&p%3===2?'<wbr>':'')+`<span class="${c.join(' ')}"${st}>${s[i]}</span>`}return h+'</span>'}
+function placeTable(n,hl,o={}){const s=String(n),L=s.length,ng=Math.max(1,Math.ceil(L/3)),cols=ng*3;let h1='',h2='',h3='',h4='';
+ for(let g=ng-1;g>=0;g--)h1+=`<th colspan="3" style="background:${GCOL[g]}">${GROUP[g]} bölüğü</th>`;
+ for(let p=cols-1;p>=0;p--){const g=Math.floor(p/3),d=p<L?s[L-1-p]:'',c=[];if(p%3===2&&p!==cols-1)c.push('gl');const c2=[...c];if(p===hl)c2.push('hl');if(o.click&&d!=='')c2.push('click');
+  h2+=`<td class="pn ${c.join(' ')}">${PLACE[p]}</td>`;h3+=`<td class="${c2.join(' ')}" data-p="${p}" style="color:${GCOL[g]}">${d}</td>`;
+  if(o.values)h4+=`<td class="${c.join(' ')}">${d!==''?fmt(pv(+d,p)):''}</td>`}
+ return `<div class="ptwrap"><table class="pt"><tr>${h1}</tr><tr>${h2}</tr><tr class="pd">${h3}</tr>${o.values?`<tr class="pv">${h4}</tr>`:''}</table></div>`}
+function sumForm(n,times){const s=String(n),L=s.length,a=[];for(let i=0;i<L;i++){const p=L-1-i,d=+s[i];if(!d)continue;a.push(times?`(${d} × ${fmt(P10(p))})`:fmt(pv(d,p)))}return a.join(' + ')}
+function toast(t){const e=el('div','toast',t);document.body.append(e);setTimeout(()=>e.remove(),2200)}
+function starsHTML(k){let h='';for(let i=0;i<3;i++)h+=i<k?'★':'<span class="off">★</span>';return h}
+
+/* ===== Abacus ===== */
+function abacus(host,rods,init,opt={}){
+ let vals=String(init||0).padStart(rods,'0').slice(-rods).split('').map(Number);
+ const box=el('div','abx'+(opt.readonly?' ro':''));host.append(box);
+ function draw(){box.innerHTML='';vals.forEach((d,i)=>{const p=rods-1-i,g=Math.floor(p/3);const col=el('div','abcol');
+  let b='';for(let k=0;k<d;k++){const y=176-k*18;b+=`<ellipse cx="23" cy="${y}" rx="19" ry="8.5" fill="${GCOL[g]}" stroke="rgba(0,0,0,.28)" stroke-width="1.5"/><ellipse cx="18" cy="${y-3}" rx="6" ry="2.2" fill="rgba(255,255,255,.45)"/>`}
+  col.innerHTML=`<svg class="rod" viewBox="0 0 46 190" preserveAspectRatio="xMidYMax meet" aria-label="${PLACE[p]} çubuğu: ${d} boncuk"><line x1="23" y1="8" x2="23" y2="190" stroke="#92400E" stroke-width="5" stroke-linecap="round"/>${b}</svg><div class="wood"></div><div class="ablab" style="color:${GCOL[g]}">${SHORT[p]}</div>`;
+  if(!opt.readonly){const bb=el('div','abbs');const m=el('button','abb','−'),pl=el('button','abb','+');m.setAttribute('aria-label',PLACE[p]+' boncuk çıkar');pl.setAttribute('aria-label',PLACE[p]+' boncuk ekle');
+   m.onclick=()=>{if(vals[i]>0){vals[i]--;draw();opt.onChange&&opt.onChange(get())}};pl.onclick=()=>{if(vals[i]<9){vals[i]++;draw();sound('tick');opt.onChange&&opt.onChange(get())}};
+   col.querySelector('svg').onclick=()=>pl.onclick();bb.append(m,pl);col.append(bb)}
+  box.append(col)})}
+ const get=()=>BigInt(vals.join(''));
+ draw();return {get,set(n){vals=String(n).padStart(rods,'0').slice(-rods).split('').map(Number);draw()}};
+}
+/* ===== Egypt ===== */
+const EG={1:'<path d="M12 5 V36"/>',10:'<path d="M5 36 V17 Q5 5 12 5 Q19 5 19 17 V36"/>',
+100:'<path d="M12 37 V30 C4 30 3 19 9 15 C15 11 21 17 17 23 C14 27 9 24 10 20 C11 17 15 18 14 21"/>',
+1000:'<path d="M12 38 V15 M12 15 C6 13 5 7 7 3 C9 7 11 9 12 15 C13 9 15 7 17 3 C19 7 18 13 12 15 M7 31 Q12 26 17 31"/>',
+10000:'<path d="M10 38 V13 Q10 5 15 6 Q20 7 18 13 L15 18 M10 25 H6"/>',
+100000:'<path d="M14 9 C21 9 21 19 15 20 C10 21 6 17 9 12 C10 10 12 9 14 9 Z M12 20 C10 26 15 31 10 38" />',
+1000000:'<circle cx="12" cy="7" r="3.5"/><path d="M12 11 V25 M12 15 L4 6 M12 15 L20 6 M12 25 L6 37 M12 25 L18 37"/>'};
+const egSVG=(v,sz=24)=>`<svg viewBox="0 0 24 40" width="${sz}" height="${sz*40/24}" aria-hidden="true"><g fill="${v===100000?'#FDE68A':'none'}" stroke="#7C2D12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${EG[v]}</g></svg>`;
+function egyptHTML(n,sz=22){let h='<div class="egbox">';for(let p=6;p>=0;p--){const d=dAt(n,p);if(!d)continue;h+='<span class="egg">';for(let k=0;k<d;k++)h+=egSVG(10**p,sz);h+='</span>'}return h+'</div>'}
+const egLegend=()=>'<div class="eglegend">'+[1,10,100,1000,10000,100000,1000000].map(v=>`<span>${egSVG(v,14)} = ${fmt(v)}</span>`).join('')+'</div>';
+
+/* ================= SOUND & FX ================= */
+let AC=null;
+function sound(t){if(!S.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const now=AC.currentTime;
+ const seq=t==='ok'?[[660,0],[880,.09],[1175,.18]]:t==='bad'?[[220,0],[175,.12]]:t==='win'?[[523,0],[659,.12],[784,.24],[1047,.36]]:[[900,0]];
+ seq.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=t==='bad'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,now+d);g.gain.exponentialRampToValueAtTime(t==='tick'?.05:.18,now+d+.02);g.gain.exponentialRampToValueAtTime(.0001,now+d+(t==='tick'?.06:.22));o.connect(g).connect(AC.destination);o.start(now+d);o.stop(now+d+.25)})}catch(e){}}
+/* ===== Canlı galaksi arka planı ===== */
+const SKY={c:null,x:null,w:0,h:0,stars:[],gals:[],comets:[],meteors:[],neb:null,t0:0,next:0,nextM:0,mx:0,my:0,tx:0,ty:0,raf:0};
+function makeGalaxy(size,arms,hue,twist){const c=document.createElement('canvas');c.width=c.height=size;const x=c.getContext('2d'),r=size/2;
+ const g=x.createRadialGradient(r,r,0,r,r,r);g.addColorStop(0,`hsla(${hue},100%,96%,.95)`);g.addColorStop(.07,`hsla(${hue},95%,82%,.6)`);g.addColorStop(.3,`hsla(${hue},75%,55%,.14)`);g.addColorStop(1,'hsla(0,0%,0%,0)');x.fillStyle=g;x.fillRect(0,0,size,size);
+ for(let i=0;i<3400;i++){const arm=i%arms,t=Math.pow(Math.random(),.75),ang=t*twist+arm*2*Math.PI/arms+(Math.random()-.5)*(.22+.55*(1-t)),d=t*r*.95+(Math.random()-.5)*r*.05;
+  const px=r+Math.cos(ang)*d,py=r+Math.sin(ang)*d,sz=Math.random()*1.2+.3;x.fillStyle=`hsla(${hue+(Math.random()*70-35)},85%,${68+Math.random()*28}%,${(1-t)*.65+.15})`;x.fillRect(px,py,sz,sz)}
+ for(let i=0;i<60;i++){const t=Math.random(),ang=t*twist+(i%arms)*2*Math.PI/arms,d=t*r*.9;x.fillStyle=`hsla(${(hue+180)%360},90%,75%,.5)`;x.beginPath();x.arc(r+Math.cos(ang)*d,r+Math.sin(ang)*d,1.6,0,6.283);x.fill()}
+ return c}
+function makeNebula(w,h){const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+ [[.8,.15,.5,'268,85%,48%',.26],[.1,.88,.55,'205,90%,42%',.22],[.55,.55,.4,'320,75%,45%',.11],[.28,.22,.32,'235,85%,55%',.1],[.95,.75,.3,'190,90%,45%',.08]].forEach(([fx,fy,fr,col,a])=>{const g=x.createRadialGradient(fx*w,fy*h,0,fx*w,fy*h,fr*Math.max(w,h));g.addColorStop(0,`hsla(${col},${a})`);g.addColorStop(.5,`hsla(${col},${a*.4})`);g.addColorStop(1,'hsla(0,0%,0%,0)');x.fillStyle=g;x.fillRect(0,0,w,h)});
+ for(let i=0;i<w*h/700;i++){x.fillStyle=`rgba(255,255,255,${Math.random()*.1})`;x.fillRect(Math.random()*w,Math.random()*h,1,1)}
+ return c}
+function initSky(){const c=$('#stars');SKY.c=c;SKY.x=c.getContext('2d');const dpr=Math.min(devicePixelRatio||1,1.5);SKY.w=innerWidth;SKY.h=innerHeight;c.width=Math.round(SKY.w*dpr);c.height=Math.round(SKY.h*dpr);SKY.x.setTransform(dpr,0,0,dpr,0,0);
+ const N=Math.min(650,Math.floor(SKY.w*SKY.h/2600));SKY.stars=Array.from({length:N},()=>{const z=Math.pow(Math.random(),2.3);return {x:Math.random()*SKY.w,y:Math.random()*SKY.h,z,r:.3+z*1.8,ph:Math.random()*6.283,sp:.5+Math.random()*2.5,col:Math.random()<.2?(Math.random()<.5?'#FDE68A':'#BAE6FD'):'#FFFFFF'}});
+ SKY.neb=makeNebula(Math.ceil(SKY.w/2),Math.ceil(SKY.h/2));
+ if(!SKY.gals.length)SKY.gals=[{img:makeGalaxy(380,2,265,7),fx:.84,fy:.2,sc:1,tilt:.42,rot:0,vr:.00004,a:.6,z:.18,base:-.5},{img:makeGalaxy(280,3,200,5.5),fx:.08,fy:.74,sc:.8,tilt:.58,rot:1,vr:-.00005,a:.45,z:.12,base:.8},{img:makeGalaxy(200,2,325,6.5),fx:.55,fy:.93,sc:.55,tilt:.32,rot:2,vr:.00006,a:.32,z:.07,base:.2},{img:makeGalaxy(150,4,40,4.5),fx:.32,fy:.1,sc:.45,tilt:.78,rot:3,vr:-.00008,a:.3,z:.05,base:1.2}];
+ SKY.comets=[];SKY.meteors=[];const n=performance.now();SKY.next=n+2500;SKY.nextM=n+1200}
+function spawnComet(){const W=SKY.w,H=SKY.h,L=Math.random()<.5,sp=.12+Math.random()*.16,an=.18+Math.random()*.3;
+ SKY.comets.push({x:L?-120:W+120,y:Math.random()*H*.55,vx:(L?1:-1)*sp*Math.cos(an),vy:sp*Math.sin(an),len:180+Math.random()*200,w:1.8+Math.random()*1.8,hue:Math.random()<.55?190:42})}
+function spawnMeteor(){const W=SKY.w,H=SKY.h,sp=.9+Math.random()*.7,an=.5+Math.random()*.4,L=Math.random()<.5;SKY.meteors.push({x:Math.random()*W,y:Math.random()*H*.4,vx:(L?1:-1)*sp*Math.cos(an),vy:sp*Math.sin(an),len:70+Math.random()*60,life:0,max:500+Math.random()*400})}
+function drawTrail(X,o,a0,w,hue){const m=Math.hypot(o.vx,o.vy),tx=o.x-o.vx/m*o.len,ty=o.y-o.vy/m*o.len,gr=X.createLinearGradient(o.x,o.y,tx,ty);
+ gr.addColorStop(0,`hsla(${hue},100%,92%,${a0})`);gr.addColorStop(.25,`hsla(${hue},95%,72%,${a0*.45})`);gr.addColorStop(1,'hsla(0,0%,100%,0)');X.strokeStyle=gr;X.lineCap='round';
+ X.globalAlpha=1;X.lineWidth=w;X.beginPath();X.moveTo(o.x,o.y);X.lineTo(tx,ty);X.stroke();X.globalAlpha=.22;X.lineWidth=w*4.5;X.stroke();X.globalAlpha=1}
+function skyFrame(t){const X=SKY.x,W=SKY.w,H=SKY.h,dt=Math.min(50,t-(SKY.t0||t));SKY.t0=t;X.clearRect(0,0,W,H);
+ SKY.tx+=(SKY.mx-SKY.tx)*.04;SKY.ty+=(SKY.my-SKY.ty)*.04;const px=SKY.tx,py=SKY.ty;
+ X.globalCompositeOperation='source-over';X.globalAlpha=1;X.drawImage(SKY.neb,-px*14-24,-py*14-24,W+48,H+48);
+ X.globalCompositeOperation='lighter';
+ for(const g of SKY.gals){g.rot+=g.vr*dt;const sz=g.img.width*g.sc*Math.max(.55,Math.min(W,H)/750);X.save();X.globalAlpha=g.a;X.translate(g.fx*W-px*g.z*140,g.fy*H-py*g.z*140);X.rotate(g.base);X.scale(1,g.tilt);X.rotate(g.rot);X.drawImage(g.img,-sz/2,-sz/2,sz,sz);X.restore()}
+ for(const s of SKY.stars){s.x-=s.z*.005*dt;if(s.x<-6)s.x=W+6;const tw=.5+.5*Math.sin(t*.001*s.sp+s.ph),a=(.22+.78*s.z)*(.35+.65*tw),x=s.x-px*s.z*46,y=s.y-py*s.z*46;
+  X.globalAlpha=a;X.fillStyle=s.col;X.beginPath();X.arc(x,y,s.r,0,6.283);X.fill();
+  if(s.z>.75&&tw>.8){const k=(tw-.8)*5;X.globalAlpha=a*.55*k;X.fillRect(x-s.r*5,y-.6,s.r*10,1.2);X.fillRect(x-.6,y-s.r*5,1.2,s.r*10)}}
+ if(t>SKY.next){spawnComet();SKY.next=t+7000+Math.random()*9000}
+ if(t>SKY.nextM){spawnMeteor();SKY.nextM=t+2500+Math.random()*5000}
+ for(let i=SKY.comets.length-1;i>=0;i--){const c=SKY.comets[i];c.x+=c.vx*dt;c.y+=c.vy*dt;drawTrail(X,c,.95,c.w,c.hue);
+  const hg=X.createRadialGradient(c.x,c.y,0,c.x,c.y,c.w*7);hg.addColorStop(0,'rgba(255,255,255,1)');hg.addColorStop(.35,`hsla(${c.hue},100%,80%,.6)`);hg.addColorStop(1,'rgba(255,255,255,0)');X.fillStyle=hg;X.beginPath();X.arc(c.x,c.y,c.w*7,0,6.283);X.fill();
+  if(c.x<-500||c.x>W+500||c.y>H+400)SKY.comets.splice(i,1)}
+ for(let i=SKY.meteors.length-1;i>=0;i--){const m=SKY.meteors[i];m.x+=m.vx*dt;m.y+=m.vy*dt;m.life+=dt;const f=Math.sin(Math.PI*Math.min(1,m.life/m.max));drawTrail(X,m,f*.9,1.2,210);if(m.life>m.max)SKY.meteors.splice(i,1)}
+ X.globalCompositeOperation='source-over';X.globalAlpha=1;
+ if(S.fx!==false&&!document.hidden)SKY.raf=requestAnimationFrame(skyFrame)}
+function skyStart(){cancelAnimationFrame(SKY.raf);initSky();const rm=matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(S.fx===false||rm){SKY.t0=0;const f=S.fx;S.fx=false;skyFrame(performance.now());S.fx=f}else SKY.raf=requestAnimationFrame(skyFrame)}
+addEventListener('pointermove',e=>{SKY.mx=e.clientX/innerWidth-.5;SKY.my=e.clientY/innerHeight-.5},{passive:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&S.fx!==false){cancelAnimationFrame(SKY.raf);SKY.t0=0;SKY.raf=requestAnimationFrame(skyFrame)}});
+function confetti(){const c=$('#fx'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const cols=['#F97316','#FACC15','#6D28D9','#16A34A','#0284C7','#DB2777'];
+ const P=Array.from({length:140},()=>({x:c.width/2+(Math.random()-.5)*200,y:c.height*.35,vx:(Math.random()-.5)*14,vy:-Math.random()*13-4,r:Math.random()*6+4,c:pick(cols),a:Math.random()*6}));
+ let t=0;(function f(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.a+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore()});if(++t<110)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
+
+/* ================= QUESTION GENERATORS ================= */
+function mkOptions(correct,cands,labelFn,filler,n=4){const used=new Set([String(correct)]),out=[{val:correct,tag:null}];
+ for(const c of shuffle(cands)){if(out.length>=n)break;if(c.val==null||used.has(String(c.val)))continue;used.add(String(c.val));out.push(c)}
+ let g=0;while(out.length<n&&filler&&g++<80){const c=filler();if(c.val==null||used.has(String(c.val)))continue;used.add(String(c.val));out.push(c)}
+ return shuffle(out).map(o=>({label:labelFn(o.val),val:o.val,tag:o.tag}))}
+function ensureZero(n){const s=String(n);if(s.length<3||/0/.test(s.slice(1)))return n;const i=rnd(1,s.length-2);return B(s.slice(0,i)+'0'+s.slice(i+1))}
+function zeroShift(n){const s=String(n),L=s.length,idx=[];for(let i=1;i<L;i++)if(s[i]==='0')idx.push(i);
+ if(idx.length){const i=pick(idx);return B(s.slice(0,i)+s.slice(i+1)+'0')}const i=rnd(1,L-1);return B(s.slice(0,i)+'0'+s.slice(i,L-1))}
+function swapAdj(n){const s=String(n).split(''),L=s.length,c=[];for(let i=0;i<L-1;i++)if(s[i]!==s[i+1]&&!(i===0&&s[1]==='0'))c.push(i);if(!c.length)return null;const i=pick(c);[s[i],s[i+1]]=[s[i+1],s[i]];return B(s.join(''))}
+function chDigit(n){const L=lenOf(n),p=rnd(0,L-2),d=dAt(n,p);let e;do{e=rnd(0,9)}while(e===d);return setDigit(n,p,e)}
+const lowName=p=>lc(PLACE[p]);
+
+const GEN={
+basamak(){const L=lenR(5),n=randNum(L,.22),M=Math.max(L,12);
+ if(Math.random()<.65){const p=rnd(0,L-1),c=[];
+  [p+1,p-1,p+2,p-2].forEach(x=>{if(x>=0&&x<M)c.push({val:x,tag:'basamakAdi'})});[p+3,p-3].forEach(x=>{if(x>=0&&x<M)c.push({val:x,tag:'bolukKayma'})});
+  return {skill:'basamak',kind:'choice',prompt:`<p>Aşağıdaki sayıda <b>işaretli rakam</b> hangi basamaktadır?</p><div class="bignum">${numHTML(n,{hl:p})}</div>`,
+   options:mkOptions(p,c,v=>PLACE[v]+' basamağı',()=>({val:rnd(0,M-1),tag:'basamakAdi'})),answer:p,answerText:PLACE[p]+' basamağı',
+   explain:`İşaretli rakam <b>${dAt(n,p)}</b>. Sağdan üçerli ayırınca <b>${lc(GROUP[Math.floor(p/3)])} bölüğünün</b> ${['birler','onlar','yüzler'][p%3]} basamağına düşüyor, yani <b>${lowName(p)} basamağı</b>.`+placeTable(n,p)}}
+ const p=rnd(0,L-1),d=dAt(n,p);
+ return {skill:'basamak',kind:'keypad',maxLen:1,answer:d,answerText:String(d),prompt:`<p><b>${fmt(n)}</b> sayısının <b>${lowName(p)} basamağındaki</b> rakam kaçtır?</p>`,
+  diagnose:v=>{v=Number(v);if((p+3<L&&v===dAt(n,p+3))||(p>=3&&v===dAt(n,p-3)))return 'bolukKayma';return 'basamakAdi'},
+  explain:`${PLACE[p]} basamağı, ${lc(GROUP[Math.floor(p/3)])} bölüğünde. Tabloda sarı kutuya bak: <b>${d}</b>.`+placeTable(n,p)}},
+
+abakus(){const r=Math.random(),L=rnd(6,S.level==1?8:10);
+ if(r<.4){const n=ensureZero(randNum(L,.3)),c=[];const cm=compress(n);if(cm&&cm!==n)c.push({val:cm,tag:'abakus'});
+  c.push({val:n*10n,tag:'abakus'},{val:swapAdj(n),tag:'okunus'},{val:chDigit(n),tag:'okunus'},{val:zeroShift(n),tag:'abakus'});
+  return {skill:'abakus',kind:'choice',prompt:`<p>Abaküste gösterilen sayı hangisidir?</p><div class="abwrap" data-ab="${n}" data-rods="${L}"></div>`,
+   options:mkOptions(n,c,v=>fmt(v),()=>({val:chDigit(n),tag:'okunus'})),answer:n,answerText:fmt(n),
+   explain:`Her çubuktaki boncukları say. Boncuk olmayan çubuk <b>0</b> demektir. Sayı ${L} basamaklı: <b>${fmt(n)}</b> (${words(n)}).`+placeTable(n)}}
+ if(r<.75){const n=ensureZero(randNum(L,.3)),rods=Math.min(12,L+1);
+  return {skill:'abakus',kind:'abacus',rods,answer:n,answerText:fmt(n),prompt:`<p>Okunuşu verilen sayıyı abaküste <b>boncuklarla</b> göster:</p><div class="words">${cap(words(n))}</div>`,
+   diagnose:v=>{if(compress(v)===compress(n))return 'abakus';if(lenOf(v)!==L)return 'bolukKayma';return 'okunus'},
+   explain:`Önce sayıyı rakamlarla yaz: <b>${fmt(n)}</b>. Sonra her rakam kadar boncuğu kendi çubuğuna koy; 0 olan çubukları boş bırak.`+placeTable(n)}}
+ const n0=randNum(L,.25);let n1=n0;
+ for(let p=0;p<L;p++){const d=dAt(n0,p);if(Math.random()<.5&&d<9)n1+=pv(rnd(1,Math.min(4,9-d)),p)}
+ if(n1===n0){for(let p=0;p<L;p++)if(dAt(n0,p)<9){n1=n0+P10(p);break}}
+ let add=0;for(let p=0;p<L;p++)add+=dAt(n1,p)-dAt(n0,p);
+ return {skill:'abakus',kind:'keypad',maxLen:2,answer:add,answerText:String(add),prompt:`<p>Bir doğal sayı abaküste gösterilmiştir.</p><div class="abwrap" data-ab="${n0}" data-rods="${L}"></div><p>Abaküsteki sayının okunuşunun <b>“${words(n1)}”</b> olması için kaç boncuk daha eklenmelidir?</p>`,
+  diagnose:()=>'abakus',explain:`Hedef sayı: <b>${fmt(n1)}</b>, abaküsteki sayı: <b>${fmt(n0)}</b>. Her basamakta eksik boncukları say: `+[...String(n1)].map((c,i)=>{const p=L-1-i,k=+c-dAt(n0,p);return k?`${SHORT[p]}: +${k}`:''}).filter(Boolean).join(', ')+` → toplam <b>${add}</b> boncuk.`}},
+
+okuma(){let n,ctx='';if(Math.random()<.35){const c=pick(CTX.filter(x=>lenOf(x.n)<=lenMax()));n=B(c.n);ctx=`<div class="ctx">${c.pre}: <b>${fmt(n)}</b>${c.unit}</div>`}else n=randNum(lenR(5,30),.3);
+ const c=[{val:chDigit(n),tag:'okunus'},{val:zeroShift(n),tag:'sifir'},{val:swapAdj(n),tag:'okunus'}];
+ if(lenOf(n)>4)c.push({val:n/10n,tag:'bolukKayma'});
+ return {skill:'okuma',kind:'choice',wide:true,prompt:ctx+`<p>${ctx?'Bu sayının':'Aşağıdaki sayının'} okunuşu hangisidir?</p>${ctx?'':`<div class="bignum">${numHTML(n,{color:true})}</div>`}`,
+  options:mkOptions(n,c,v=>cap(words(v)),()=>({val:chDigit(n),tag:'okunus'})),answer:n,answerText:cap(words(n)),
+  explain:`Sağdan üçerli ayır: `+groupsOf(n).map((g,i)=>`<b style="color:${GCOL[i]}">${g}</b> ${lc(GROUP[i])}`).reverse().join(' | ')+`. Soldan oku; bölükteki sayıdan sonra bölük adını söyle, sıfır olan bölüğü atla: <b>${cap(words(n))}</b>.`+placeTable(n)}},
+
+yazma(){let n,ctx='';if(Math.random()<.35){const c=pick(CTX.filter(x=>lenOf(x.n)<=lenMax()));n=B(c.n);ctx=`<div class="ctx">${c.pre}: <b>“${words(n)}”</b>${c.unit}</div>`}else n=randNum(lenR(5),.35);
+ const G=groupsOf(n);
+ return {skill:'yazma',kind:'keypad',maxLen:lenMax(),answer:n,answerText:fmt(n),prompt:ctx+(ctx?'<p>Bu sayıyı <b>rakamlarla</b> yaz.</p>':`<p>Okunuşu verilen sayıyı <b>rakamlarla</b> yaz:</p><div class="words">${cap(words(n))}</div>`),
+  diagnose:v=>{if(compress(v)===compress(n))return 'sifir';if(lenOf(v)!==lenOf(n))return 'bolukKayma';return 'okunus'},
+  explain:`Okunuşu bölüklere ayır, her bölüğü 3 basamakla yaz (eksik basamaklara 0): `+G.map((g,i)=>`<b style="color:${GCOL[i]}">${i===G.length-1?g:String(g).padStart(3,'0')}</b>`).reverse().join(' ')+` → <b>${fmt(n)}</b>`+placeTable(n)}},
+
+boluk(){const L=lenR(7);
+ if(Math.random()<.55){const n=randNum(L,.32),G=groupsOf(n),gi=rnd(0,G.length-1),ans=G[gi];
+  return {skill:'boluk',kind:'keypad',maxLen:3,answer:ans,answerText:String(ans),prompt:`<p><b>${fmt(n)}</b> sayısının <b style="color:${GCOL[gi]}">${lc(GROUP[gi])} bölüğündeki</b> sayı kaçtır?</p>`,
+   diagnose:v=>{v=Number(v);return G.some((g,i)=>i!==gi&&g===v)?'bolukKayma':'genel'},
+   explain:`Sağdan başlayarak üçerli ayır. ${GROUP[gi]} bölüğü: <b>${String(G[gi]).padStart(gi===G.length-1?1:3,'0')}</b>, yani <b>${ans}</b>.`+placeTable(n)}}
+ const ng=Math.ceil(L/3),lead=L%3?10**(L%3)-1:999;let G;do{G=Array.from({length:ng},(_,i)=>i===ng-1?rnd(1,lead):(Math.random()<.5?rnd(0,99):rnd(100,999)))}while(G.slice(0,-1).every(g=>g>=100));
+ const n=fromGroups(G),wrong=B(G.slice().reverse().join(''));
+ const lines=shuffle(G.map((g,i)=>`<div><b style="color:${GCOL[i]}">${GROUP[i]} bölüğü:</b> ${g}</div>`));
+ return {skill:'boluk',kind:'keypad',maxLen:lenMax(),answer:n,answerText:fmt(n),prompt:`<p>Bölükleri verilen sayıyı rakamlarla yaz.</p><div class="ctx" style="font-size:1.2rem;line-height:1.7">${lines.join('')}</div>`,
+  diagnose:v=>v===wrong?'sifir':'bolukKayma',
+  explain:`Bölükleri büyükten küçüğe diz ve her bölüğü (en soldaki hariç) <b>3 basamakla</b> yaz: `+G.map((g,i)=>`<b style="color:${GCOL[i]}">${i===G.length-1?g:String(g).padStart(3,'0')}</b>`).reverse().join(' ')+` → <b>${fmt(n)}</b>`+placeTable(n)}},
+
+deger(){const L=lenR(5),r=Math.random(),n=randNum(L,.25);
+ if(r<.15){const s=[...String(n)].reduce((a,b)=>a+ +b,0);
+  return {skill:'deger',kind:'choice',prompt:`<p><b>${fmt(n)}</b> sayısının rakamlarının <b>basamak değerleri toplamı</b> kaçtır?</p>`,
+   options:mkOptions(n,[{val:B(s),tag:'rakamDeger'},{val:zeroShift(n),tag:'sifir'},{val:n/10n,tag:'basamakAdi'}],v=>fmt(v),()=>({val:chDigit(n),tag:'genel'})),answer:n,answerText:fmt(n),
+   explain:`Basamak değerlerini toplayınca sayının kendisini buluruz: ${sumForm(n)} = <b>${fmt(n)}</b>. Rakamları toplamak (${s}) farklı bir şeydir.`}}
+ const nz=[];for(let p=0;p<L;p++)if(dAt(n,p))nz.push(p);const pp=nz.filter(x=>x>0);const p=pick(pp.length?pp:nz),d=dAt(n,p),v=pv(d,p);
+ if(r<.65){const c=[{val:B(d),tag:'rakamDeger'},{val:pv(d,p+1),tag:'basamakAdi'},{val:p>0?pv(d,p-1):null,tag:'basamakAdi'},{val:p+3<lenMax()?pv(d,p+3):null,tag:'bolukKayma'}];
+  return {skill:'deger',kind:'choice',prompt:`<p>Aşağıdaki sayıda <b>işaretli rakamın basamak değeri</b> kaçtır?</p><div class="bignum">${numHTML(n,{hl:p})}</div>`,
+   options:mkOptions(v,c,x=>fmt(x),()=>({val:pv(d,rnd(0,lenMax()-1)),tag:'basamakAdi'})),answer:v,answerText:fmt(v),
+   explain:`İşaretli rakam <b>${d}</b>, ${lowName(p)} basamağında. Basamak değeri = ${d} × ${fmt(P10(p))} = <b>${fmt(v)}</b>. Rakam ${d}, basamak değeri ${fmt(v)}.`+placeTable(n,p,{values:true})}}
+ return {skill:'deger',kind:'keypad',maxLen:lenMax(),answer:v,answerText:fmt(v),prompt:`<p><b>${fmt(n)}</b> sayısında <b>${lowName(p)} basamağındaki</b> rakamın basamak değeri kaçtır?</p>`,
+  diagnose:x=>x===B(d)?'rakamDeger':(x===pv(d,p+1)||(p>0&&x===pv(d,p-1)))?'basamakAdi':'genel',
+  explain:`${PLACE[p]} basamağındaki rakam <b>${d}</b>. Basamak değeri = ${d} × ${fmt(P10(p))} = <b>${fmt(v)}</b>.`+placeTable(n,p,{values:true})}},
+
+cozum(){const r=Math.random();
+ if(r<.35){const n=randNum(lenR(5,30),.35),parts=sumForm(n,true).split(' + '),ordered=Math.random()<.6?parts:shuffle(parts);
+  return {skill:'cozum',kind:'keypad',maxLen:lenMax(),answer:n,answerText:fmt(n),prompt:`<p>Çözümlenmiş hâli verilen sayıyı rakamlarla yaz:</p><div class="words mono" style="font-size:1.15rem">${ordered.join(' + ')}</div>`,
+   diagnose:v=>compress(v)===compress(n)?'sifir':'basamakAdi',
+   explain:`Her parça bir basamağın değeri: ${sumForm(n)}. Hiç parçası olmayan basamaklara 0 yaz → <b>${fmt(n)}</b>.`+placeTable(n,null,{values:true})}}
+ if(r<.7){const n=ensureZero(randNum(lenR(5,24),.3)),t=Math.random()<.5,f=x=>typeof x==='string'?x:sumForm(x,t);
+  const s=String(n),nz=[...s].map((c,i)=>c!=='0'?i:-1).filter(i=>i>0);let rd=null;if(nz.length){const i=pick(nz);const L=s.length,p=L-1-i,d=+s[i];rd=sumForm(n,t).split(' + ').map(x=>(t?x===`(${d} × ${fmt(P10(p))})`:x===fmt(pv(d,p)))?(t?`(${d} × 1)`:String(d)):x).join(' + ')}
+  const cm=compress(n),c=[{val:f(chDigit(n)),tag:'basamakAdi'},{val:cm&&cm!==n?f(cm):null,tag:'sifir'},{val:rd,tag:'rakamDeger'},{val:f(zeroShift(n)),tag:'sifir'}];
+  return {skill:'cozum',kind:'choice',wide:true,prompt:`<p><b>${fmt(n)}</b> sayısının doğru çözümlemesi hangisidir?</p>`,
+   options:mkOptions(f(n),c,x=>x,()=>({val:f(chDigit(n)),tag:'basamakAdi'})),answer:f(n),answerText:f(n),
+   explain:`Sıfır olmayan her rakamı basamak değeriyle yaz: <b>${sumForm(n,true)}</b> = ${sumForm(n)}.`+placeTable(n,null,{values:true})}}
+ const L=rnd(4,7);let s=''+rnd(1,5);for(let i=1;i<L;i++)s+=Math.random()<.3?'0':rnd(1,5);const n=B(s);
+ return {skill:'cozum',kind:'keypad',maxLen:7,answer:n,answerText:fmt(n),prompt:`<p>Eski Mısırlıların sembolleriyle yazılmış sayıyı rakamlarla yaz.</p>${egyptHTML(n,24)}${egLegend()}`,
+  diagnose:v=>compress(v)===compress(n)?'sifir':'basamakAdi',
+  explain:`Her sembol türünü say ve basamağına yaz: `+[...s].map((c,i)=>{const p=L-1-i;return +c?`${c} × ${fmt(P10(p))}`:''}).filter(Boolean).join(' + ')+` = <b>${fmt(n)}</b>. Hiç sembolü olmayan basamak 0'dır.`}},
+
+karsi(){const r=Math.random();
+ if(r<.55){const L=lenR(5,30);let a=randNum(L,.25),b;const t=Math.random();
+  if(t<.3&&L>5){a=B('1'+String(a).slice(1));b=B('9'+String(randNum(L-1,.2)).slice(1))}
+  else if(t<.94){const p=rnd(0,L-2);b=setDigit(a,p,(dAt(a,p)+rnd(1,9))%10);for(let q=0;q<p;q++)if(Math.random()<.7)b=setDigit(b,q,rnd(0,9))}
+  else b=a;
+  if(Math.random()<.5)[a,b]=[b,a];
+  const ans=a<b?'<':a>b?'>':'=';let ex;
+  if(lenOf(a)!==lenOf(b))ex=`${fmt(a)} sayısı ${lenOf(a)}, ${fmt(b)} sayısı ${lenOf(b)} basamaklı. <b>Basamak sayısı fazla olan büyüktür</b>; ilk rakamın büyük olması önemli değil.`;
+  else if(a===b)ex='İki sayının bütün basamakları aynı; sayılar eşittir.';
+  else{const sa=String(a),sb=String(b);let i=0;while(sa[i]===sb[i])i++;const p=sa.length-1-i;ex=`Basamak sayıları eşit (${sa.length}). Soldan karşılaştır: ilk farklı rakam <b>${lowName(p)} basamağında</b>: ${sa[i]} ve ${sb[i]}.<div class="bignum" style="font-size:1.6rem">${numHTML(a,{hl:p})} ${ans} ${numHTML(b,{hl:p})}</div>`}
+  return {skill:'karsi',kind:'cmp',a,b,answer:ans,answerText:`${fmt(a)} ${ans} ${fmt(b)}`,prompt:'<p>Sayıları karşılaştır: ortadaki boşluğa hangi sembol gelir?</p>',explain:ex+'<br>Hatırla: sembolün açık ağzı büyük sayıya bakar.'}}
+ let items,dir=Math.random()<.5?'asc':'desc',title;const t=Math.random();
+ if(t<.25){items=FIDAN.map(f=>({label:`${f[0]}: ${fmt(f[1])}`,val:B(f[1])}));title='Yıllara göre dikilen fidan sayılarını'}
+ else if(t<.45){items=shuffle(TURIST).slice(0,4).map(x=>({label:`${x[0]}: ${fmt(x[2])}`,val:B(x[2])}));title='Ülkelerden gelen turist sayılarını'}
+ else{const L=lenR(6,24),base=randNum(L,.25),set=new Set([base]);let g=0;
+  while(set.size<(Math.random()<.5?3:4)&&g++<60){let v;if(Math.random()<.25)v=B('9'+String(randNum(L-1,.2)).slice(1));else{const p=rnd(0,L-2);v=setDigit(base,p,rnd(0,9));if(Math.random()<.5){const q=rnd(0,p);v=setDigit(v,q,rnd(0,9))}}if(v>0n)set.add(v)}
+  items=[...set].map(v=>({label:fmt(v),val:v}));title='Sayıları'}
+ const sorted=[...items].sort((x,y)=>dir==='asc'?cmpB(x.val,y.val):cmpB(y.val,x.val));
+ return {skill:'karsi',kind:'order',items:shuffle(items),order:sorted.map(i=>i.val),dir,answerText:sorted.map(i=>i.label).join(dir==='asc'?' < ':' > '),
+  prompt:`<p>${title} <b>${dir==='asc'?'küçükten büyüğe':'büyükten küçüğe'}</b> sırala. Sırayla dokun.</p>`,
+  explain:`Önce basamak sayılarına bak; basamak sayısı eşit olanlarda soldan ilk farklı rakamı karşılaştır.<br><b>${sorted.map(i=>fmt(i.val)).join(dir==='asc'?' &lt; ':' &gt; ')}</b>`}},
+
+kart(){const k=rnd(6,S.level==1?8:10);let ds;do{ds=shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0,k);if(Math.random()<.7&&!ds.includes(0))ds[rnd(1,k-1)]=0}while(new Set(ds).size!==k);
+ const hasOdd=ds.some(d=>d%2),hasEven=ds.some(d=>d%2===0);const tasks=['max','min'];if(hasOdd)tasks.push('maxOdd');if(hasEven)tasks.push('minEven');
+ const task=pick(tasks),ans=solveCards(ds,task);const TX={max:'en büyük',min:'en küçük',maxOdd:'en büyük tek',minEven:'en küçük çift'};
+ return {skill:'kart',kind:'cards',cards:shuffle(ds),answer:ans,answerText:fmt(ans),task,prompt:`<p>Kartlardaki rakamların <b>her birini birer kez</b> kullanarak yazılabilecek <b>${k} basamaklı ${TX[task]}</b> doğal sayıyı kur.</p>`,
+  diagnose:s=>{if(s[0]==='0')return 'kartBas';const last=+s[s.length-1];if(task==='maxOdd'&&last%2===0)return 'kartTekCift';if(task==='minEven'&&last%2===1)return 'kartTekCift';return 'kartSira'},
+  explain:{max:'Büyük rakamları sola yerleştir: ',min:'Küçük rakamları sola yerleştir ama 0 başa gelemez; en küçük sıfır olmayan rakam başa, 0 ikinci sıraya: ',maxOdd:'Birler basamağına tek rakamların en küçüğünü koy, kalan rakamları büyükten küçüğe diz: ',minEven:'Birler basamağına çift bir rakam koy (en küçük sonucu veren), kalanları küçükten büyüğe diz; 0 başa gelmez: '}[task]+`<b>${fmt(ans)}</b>`}}
+};
+function minArr(a){const s=[...a].sort((x,y)=>x-y),i=s.findIndex(x=>x>0);if(i<0)return s;const f=s.splice(i,1);return f.concat(s)}
+function solveCards(ds,task){const desc=a=>[...a].sort((x,y)=>y-x);
+ if(task==='max')return +desc(ds).join('');if(task==='min')return +minArr(ds).join('');
+ const want=/Odd/.test(task)?1:0,isMax=/^max/.test(task);let best=null;
+ for(const d of ds){if(d%2!==want)continue;const rest=ds.filter(x=>x!==d);if(rest.length&&!rest.some(x=>x>0))continue;const v=+((isMax?desc(rest):minArr(rest)).join('')+d);if(best===null||(isMax?v>best:v<best))best=v}return best}
+
+/* ================= RENDER QUESTION ================= */
+let activeKeypad=null;
+function renderQ(q,host,onAnswered,onNext){
+ host.innerHTML='';activeKeypad=null;
+ host.append(el('div','qprompt',q.prompt));
+ host.querySelectorAll('[data-ab]').forEach(a=>abacus(a,+a.dataset.rods,+a.dataset.ab,{readonly:true}));
+ const area=el('div','qarea');host.append(area);const fb=el('div','fb hidden');host.append(fb);
+ let done=false;
+ function finish(ok,tag,user){if(done)return;done=true;activeKeypad=null;area.classList.add('locked');
+  onAnswered&&onAnswered(ok,ok?null:tag);sound(ok?'ok':'bad');
+  fb.className='fb '+(ok?'ok':'bad');
+  fb.innerHTML=`<div class="fbh">${ok?pick(PRAISE):(user==='⏰'?'⏰ Süre doldu!':'Bu sefer olmadı, birlikte bakalım')}</div>`+
+   (ok?'':`${user&&user!=='⏰'?`<div class="fbu">Senin cevabın: <b>${user}</b></div>`:''}<div class="fba">Doğru cevap: <b>${q.answerText}</b></div>`)+
+   (!ok&&tag&&TAGS[tag]?`<div class="tip">💡 <b>${TAGS[tag].ad}:</b> ${TAGS[tag].ip}</div>`:'')+
+   `<details ${ok?'':'open'}><summary>Nasıl düşünmeliyim?</summary><div class="exp">${q.explain||''}</div></details>`;
+  const nb=el('button','btn btn-p big','Devam ▶');nb.onclick=()=>onNext&&onNext();fb.append(nb);
+  setTimeout(()=>{fb.scrollIntoView({behavior:'smooth',block:'nearest'});nb.focus({preventScroll:true})},60)}
+ const ctl={timeout(){finish(false,null,'⏰')},get done(){return done}};
+ const K=q.kind;
+ if(K==='choice'){const g=el('div','opts'+(q.wide?' wide':''));q.options.forEach(o=>{const b=el('button','opt',o.label);
+   b.onclick=()=>{if(done)return;const ok=o.val===q.answer;b.classList.add(ok?'right':'wrong');if(!ok)[...g.children].forEach((c,i)=>{if(q.options[i].val===q.answer)c.classList.add('right')});finish(ok,o.tag||'genel',o.label)};g.append(b)});area.append(g)}
+ else if(K==='keypad'){keypad(area,q.maxLen,v=>{const n=BigInt(v),ok=q.check?q.check(v):String(n)===String(q.answer);finish(ok,ok?null:(q.diagnose?q.diagnose(n,v):'genel'),fmt(v))})}
+ else if(K==='cmp'){area.append(el('div','cmprow',`<div class="cmpn">${numHTML(q.a)}</div><div class="cmpq">?</div><div class="cmpn">${numHTML(q.b)}</div>`));
+  const bs=el('div','cmpbtns');['<','=','>'].forEach(s=>{const b=el('button','cmpb',s);b.setAttribute('aria-label',{'<':'küçüktür','=':'eşittir','>':'büyüktür'}[s]);
+   b.onclick=()=>{if(done)return;area.querySelector('.cmpq').textContent=s;finish(s===q.answer,'karsilastirma',`${fmt(q.a)} ${s} ${fmt(q.b)}`)};bs.append(b)});area.append(bs)}
+ else if(K==='order'){const sel=[];const selBox=el('div','ordsel','<span class="muted">Seçtiklerin burada sıralanacak</span>'),pool=el('div','ordpool');
+  const ctr=el('div','row');ctr.style.justifyContent='center';const rs=el('button','btn','↺ Baştan'),ck=el('button','btn btn-g','✔ Kontrol et');ck.disabled=true;
+  const draw=()=>{selBox.innerHTML=sel.length?sel.map((it,i)=>(i?`<span class="sym">${q.dir==='asc'?'&lt;':'&gt;'}</span>`:'')+`<span class="chip"><i>${i+1}</i>${it.label}</span>`).join(''):'<span class="muted">Seçtiklerin burada sıralanacak</span>';ck.disabled=sel.length!==q.items.length};
+  q.items.forEach(it=>{const b=el('button','ordb',it.label);b.onclick=()=>{if(done)return;sel.push(it);b.classList.add('used');sound('tick');draw()};pool.append(b)});
+  rs.onclick=()=>{if(done)return;sel.length=0;pool.querySelectorAll('.ordb').forEach(b=>b.classList.remove('used'));draw()};
+  ck.onclick=()=>{if(done||sel.length!==q.items.length)return;const ok=sel.every((it,i)=>it.val===q.order[i]);finish(ok,'karsilastirma',sel.map(i=>i.label).join(q.dir==='asc'?' < ':' > '))};
+  ctr.append(rs,ck);area.append(pool,selBox,ctr)}
+ else if(K==='cards'){const k=q.cards.length,slots=Array(k).fill(null);const cw=el('div','cards'),sw=el('div','slots');const ctr=el('div','row');ctr.style.justifyContent='center';
+  const ck=el('button','btn btn-g big','✔ Kontrol et'),rs=el('button','btn','↺ Baştan');ck.disabled=true;const cbs=[];
+  const draw=()=>{sw.innerHTML='';slots.forEach((v,i)=>{const p=k-1-i;const s=el('div','slot'+(v!=null?' f':'')+(i>0&&p%3===2?' gsp':''),v!=null?String(q.cards[v]):'');s.setAttribute('role','button');
+    s.onclick=()=>{if(done||v==null)return;cbs[v].classList.remove('used');slots[i]=null;draw()};sw.append(s)});ck.disabled=slots.some(v=>v==null)};
+  q.cards.forEach((d,ci)=>{const b=el('button','cardb',String(d));b.onclick=()=>{if(done)return;const i=slots.indexOf(null);if(i<0)return;slots[i]=ci;b.classList.add('used');sound('tick');draw()};cbs.push(b);cw.append(b)});
+  rs.onclick=()=>{if(done)return;slots.fill(null);cbs.forEach(b=>b.classList.remove('used'));draw()};
+  ck.onclick=()=>{if(done)return;const s=slots.map(v=>q.cards[v]).join('');const ok=s===String(q.answer);finish(ok,q.diagnose(s),fmt(s))};
+  draw();ctr.append(rs,ck);area.append(cw,sw,ctr)}
+ else if(K==='abacus'){const w=el('div','abwrap');area.append(w);const ab=abacus(w,q.rods,0,{});const ctr=el('div','row');ctr.style.justifyContent='center';
+  const ck=el('button','btn btn-g big','✔ Kontrol et'),rs=el('button','btn','↺ Temizle');rs.onclick=()=>{if(!done)ab.set(0)};
+  ck.onclick=()=>{if(done)return;const v=ab.get();if(!v){toast('Önce boncuk ekle 🙂');return}finish(v===q.answer,q.diagnose(v),fmt(v))};ctr.append(rs,ck);area.append(ctr)}
+ return ctl}
+function keypad(area,maxLen,onSubmit){let v='';const w=el('div','kwrap'),disp=el('div','kdisp'),grid=el('div','kgrid');
+ const upd=()=>{disp.innerHTML=v?numHTML(v):'<span class="ph">Cevabını yaz</span>'};
+ const api={get:()=>v,press(k){if(/^\d$/.test(k)){if(v.length<maxLen)v+=k;sound('tick')}else if(k==='del')v=v.slice(0,-1);else if(k==='clr')v='';else if(k==='ok'){if(v)onSubmit(v);return}upd()}};
+ ['1','2','3','4','5','6','7','8','9','del','0','ok'].forEach(k=>{const b=el('button','key'+(k==='ok'?' ok':k==='del'?' del':''),k==='del'?'⌫':k==='ok'?'✔ Kontrol':k);if(k==='del')b.setAttribute('aria-label','Sil');b.onclick=()=>api.press(k);grid.append(b)});
+ const cl=el('button','kclear','Hepsini temizle');cl.onclick=()=>api.press('clr');
+ upd();w.append(disp,grid,cl);area.append(w);activeKeypad=api;return api}
+document.addEventListener('keydown',e=>{if(!activeKeypad)return;if(e.target.matches&&e.target.matches('input,select,textarea'))return;
+ if(/^\d$/.test(e.key)){activeKeypad.press(e.key);e.preventDefault()}else if(e.key==='Backspace'){activeKeypad.press('del');e.preventDefault()}else if(e.key==='Enter'){activeKeypad.press('ok');e.preventDefault()}});
+
+/* ================= MISSION ENGINE ================= */
+let M=null;
+function record(sk,ok,tag){const r=S.skills[sk]||(S.skills[sk]={c:0,t:0,tags:{}});r.t++;if(ok)r.c++;else if(tag)r.tags[tag]=(r.tags[tag]||0)+1;save()}
+function startPlanet(pid){const P=PLANETS.find(p=>p.id===pid);startMission({mode:'planet',planet:P,title:`${P.ad} • ${P.gv}`,sub:SKILLS[P.sk],queue:Array(8).fill(0).map(()=>({sk:P.sk}))})}
+function startTani(){const q=[];Object.keys(SKILLS).forEach(k=>{q.push({sk:k},{sk:k})});startMission({mode:'tani',title:'🧭 Tanı Görevi',sub:'9 konu × 2 soru',queue:shuffle(q)})}
+function startMission(cfg){M=Object.assign(cfg,{i:0,correct:0,answered:0,tags:{},extra:0});show('game');
+ $('#gOrb').className='planet sm '+(cfg.planet?'p-'+cfg.planet.id:'p-saturn');$('#gTitle').textContent=cfg.title;nextQ()}
+function hud(){$('#gSub').textContent=`${M.sub} • Soru ${Math.min(M.i+1,M.queue.length)} / ${M.queue.length}`;$('#gProg').style.width=(M.i/M.queue.length*100)+'%';$('#gScore').textContent='✔ '+M.correct}
+function nextQ(){if(M.i>=M.queue.length)return endMission();const it=M.queue[M.i];hud();
+ $('#gTelafi').innerHTML=it.telafi?`<span class="telafi">🔁 Telafi sorusu: ${TAGS[it.telafi]?TAGS[it.telafi].ad:'tekrar deneyelim'}</span>`:(M.mode==='tani'?`<span class="badge">${SKILLS[it.sk]}</span><div style="height:8px"></div>`:'');
+ const q=GEN[it.sk]();
+ renderQ(q,$('#gq'),(ok,tag)=>{record(it.sk,ok,tag);M.answered++;if(ok)M.correct++;else{const t=tag||'genel';M.tags[t]=(M.tags[t]||0)+1;if(M.mode==='planet'&&M.extra<3){M.queue.push({sk:it.sk,telafi:t});M.extra++}}hud()},
+  ()=>{M.i++;nextQ();window.scrollTo({top:0,behavior:'smooth'})})}
+function endMission(){const acc=M.answered?M.correct/M.answered:0,st=acc>=.9?3:acc>=.7?2:acc>=.5?1:0;
+ $('#gProg').style.width='100%';$('#gTelafi').innerHTML='';
+ if(M.mode==='planet'){const id=M.planet.id;S.stars[id]=Math.max(S.stars[id]||0,st);save()}
+ const tags=Object.entries(M.tags).sort((a,b)=>b[1]-a[1]);
+ const box=el('div','endbox');
+ box.innerHTML=`<div class="bigstars">${starsHTML(st)}</div><h2>${M.mode==='tani'?'Tanı tamamlandı!':st>=2?'Görev başarıyla tamamlandı!':'Görev tamamlandı, bir tur daha?'}</h2>
+  <p class="muted" style="font-size:1.15rem">${S.name?S.name+', ':''}${M.answered} sorudan <b>${M.correct}</b> tanesini doğru yaptın (%${Math.round(acc*100)}).</p>`;
+ if(M.mode==='tani'){const per={};M.queue.forEach(()=>{});const weak=Object.keys(SKILLS).map(k=>({k,r:S.skills[k]})).filter(x=>x.r&&x.r.t).map(x=>({k:x.k,p:x.r.c/x.r.t})).sort((a,b)=>a.p-b.p).filter(x=>x.p<.8).slice(0,3);
+  box.innerHTML+=`<div class="taglist">${weak.length?'<b>Önerilen rota:</b>'+weak.map(w=>`<div class="tagitem"><b>${PL_BY_SK[w.k].ad}: ${SKILLS[w.k]}</b> (başarı %${Math.round(w.p*100)})<br><button class="btn btn-a" data-go="${PL_BY_SK[w.k].id}">🚀 ${PL_BY_SK[w.k].ad}'e git</button></div>`).join(''):'<div class="tagitem">Tüm konularda güçlüsün! Plüton bonus görevini ve 12 basamak seviyesini dene. 🌟</div>'}</div>`}
+ if(tags.length)box.innerHTML+=`<div class="taglist"><b>Dikkat etmen gerekenler:</b>`+tags.map(([t,c])=>`<div class="tagitem"><b>${TAGS[t].ad}</b> (${c} kez)<br>${TAGS[t].ip}${TAGS[t].sk&&(!M.planet||TAGS[t].sk!==M.planet.sk)?`<br><button class="btn" data-go="${PL_BY_SK[TAGS[t].sk].id}">🚀 ${PL_BY_SK[TAGS[t].sk].ad}'de çalış</button>`:''}</div>`).join('')+'</div>';
+ const bb=el('div','endbtns');
+ if(M.mode==='planet'){const again=el('button','btn btn-a big','↻ Tekrar oyna');again.onclick=()=>startPlanet(M.planet.id);bb.append(again);
+  const ix=PLANETS.findIndex(p=>p.id===M.planet.id);if(ix<PLANETS.length-1){const nx=el('button','btn btn-p big',`Sonraki: ${PLANETS[ix+1].ad} ▶`);nx.onclick=()=>startPlanet(PLANETS[ix+1].id);bb.append(nx)}}
+ else{const r=el('button','btn btn-p big','📊 Raporu gör');r.onclick=()=>show('report');bb.append(r)}
+ const hm=el('button','btn big','🪐 Haritaya dön');hm.onclick=()=>show('map');bb.append(hm);box.append(bb);
+ box.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>startPlanet(b.dataset.go));
+ $('#gq').innerHTML='';$('#gq').append(box);if(st>=2||M.mode==='tani'){confetti();sound('win')}}
+$('#gExit').onclick=()=>{M=null;activeKeypad=null;show('map')};
+
+/* ================= MAP ================= */
+function renderMap(){const h=$('#planets');h.innerHTML='';PLANETS.forEach(P=>{const r=S.skills[P.sk],pc=r&&r.t?Math.round(r.c/r.t*100):0;
+ const c=el('div','pcard',`<div class="ph"><div class="planet p-${P.id}"></div><div><h3>${P.ad}</h3><div class="gv">${P.gv}</div><div class="stars">${starsHTML(S.stars[P.id]||0)}</div></div></div>
+  <p>${P.oz}</p><div><div class="muted" style="font-size:.8rem;margin-bottom:4px">Ustalık: %${pc}${r&&r.t?` (${r.c}/${r.t})`:''}</div><div class="mbar"><i style="width:${pc}%"></i></div></div>
+  <div class="pb"><button class="btn btn-p" data-play="${P.id}">▶ Görev</button><button class="btn" data-lab="${P.lab}">🔬 Keşfet</button></div>`);h.append(c)});
+ h.querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>startPlanet(b.dataset.play));
+ h.querySelectorAll('[data-lab]').forEach(b=>b.onclick=()=>openStation(b.dataset.lab))}
+$('#nameIn').value=S.name||'';$('#nameIn').oninput=e=>{S.name=e.target.value.trim();save()};
+$('#taniBtn').onclick=startTani;
+
+/* ================= LAB: İSTASYONLAR ================= */
+const ST={},STORDER=['tablo','okunus','abakus','cozum','misir','terazi','kart'];
+function novaSVG(m){
+ const eyes=m==='happy'?'<path d="M27 37 Q32 31 37 37 M43 37 Q48 31 53 37" stroke="#67E8F9" stroke-width="3.5" fill="none" stroke-linecap="round"/>':m==='sad'?'<path d="M27 33 L36 36 M53 33 L44 36" stroke="#67E8F9" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="40" r="3" fill="#67E8F9"/><circle cx="48" cy="40" r="3" fill="#67E8F9"/>':`<circle cx="32" cy="37" r="${m==='wow'?5:4}" fill="#67E8F9"/><circle cx="48" cy="37" r="${m==='wow'?5:4}" fill="#67E8F9"/>`;
+ const mouth=m==='happy'?'<path d="M33 45 Q40 51 47 45" stroke="#67E8F9" stroke-width="3" fill="none" stroke-linecap="round"/>':m==='wow'?'<ellipse cx="40" cy="47" rx="3.5" ry="4.5" fill="#67E8F9"/>':m==='sad'?'<path d="M34 49 Q40 45 46 49" stroke="#67E8F9" stroke-width="3" fill="none" stroke-linecap="round"/>':'<path d="M34 47 H46" stroke="#67E8F9" stroke-width="3" stroke-linecap="round"/>';
+ return `<svg viewBox="0 0 80 100" aria-hidden="true"><line x1="40" y1="12" x2="40" y2="5" stroke="#C4B5FD" stroke-width="3"/><circle cx="40" cy="5" r="4.5" fill="#F97316"/><rect x="12" y="70" width="12" height="18" rx="6" fill="#fff" stroke="#C4B5FD" stroke-width="3"/><rect x="56" y="70" width="12" height="18" rx="6" fill="#fff" stroke="#C4B5FD" stroke-width="3"/><rect x="22" y="64" width="36" height="30" rx="12" fill="#fff" stroke="#C4B5FD" stroke-width="4"/><circle cx="40" cy="80" r="5" fill="#F97316"/><circle cx="40" cy="38" r="28" fill="#fff" stroke="#C4B5FD" stroke-width="4"/><rect x="19" y="23" width="42" height="31" rx="15" fill="#1E1B4B"/>${eyes}${mouth}</svg>`}
+function makeNova(host){const w=el('div','novabox','<div class="novafig"></div><div class="bubble" aria-live="polite"></div>');host.append(w);
+ return {say(h,m='happy'){w.querySelector('.novafig').innerHTML=novaSVG(m);const b=w.querySelector('.bubble');b.innerHTML=h;b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')}}}
+function speak(t){if(!S.sound)return false;try{const u=new SpeechSynthesisUtterance(t);u.lang='tr-TR';u.rate=.88;const v=speechSynthesis.getVoices().find(v=>/^tr/i.test(v.lang));if(v)u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u);return true}catch(e){return false}}
+function hintBuild(v,n){if(!v)return 'Henüz bir sayı oluşturmadın.';const cv=compress(v),cn=compress(n);
+ if(lenOf(v)!==lenOf(n))return (cv===cn?'Rakamların doğru ama <b>sıfırlar</b> eksik ya da fazla. ':'')+`Hedef sayı <b>${lenOf(n)} basamaklı</b>, seninki ${lenOf(v)} basamaklı. Bölükleri tek tek kontrol et.`;
+ const sv=String(v),sn=String(n);let i=0;while(sv[i]===sn[i])i++;return `Çok yaklaştın! <b>${lowName(sn.length-1-i)} basamağını</b> bir kontrol et.`}
+function presetRow(onPick){const r=el('div','presets');[...PL_DIST.map(p=>[p[0],p[2]]),...FIDAN.map(f=>['Fidan '+f[0],f[1]])].filter(x=>lenOf(x[1])<=lenMax()).forEach(([l,v])=>{const b=el('button',null,l);b.onclick=()=>onPick(v);r.append(b)});return r}
+function numInput(ph,onVal){const i=el('input','labin');i.type='text';i.inputMode='numeric';i.autocomplete='off';i.placeholder=ph;i.setAttribute('aria-label',ph);
+ i.oninput=()=>{const d=i.value.replace(/\D/g,'').slice(0,lenMax());i.value=fmt(d);onVal(d?B(d):0n)};return i}
+function chipBuilder(area,tokens,extras){const all=shuffle([...tokens,...extras].map((t,i)=>({t,i})));let built=[];
+ const sent=el('div','sentence'),pool=el('div','chippool');area.append(sent,pool);
+ function draw(){sent.innerHTML=built.length?'':'<span class="muted">Kartlara sırayla dokun, okunuş burada oluşsun</span>';built.forEach((c,k)=>{const b=el('button','wchip on',c.t);b.onclick=()=>{built.splice(k,1);draw()};sent.append(b)});
+  pool.innerHTML='';all.forEach(c=>{const b=el('button','wchip'+(built.includes(c)?' used':''),c.t);b.onclick=()=>{if(built.includes(c))return;built.push(c);sound('tick');draw()};pool.append(b)})}
+ draw();return {get:()=>built.map(c=>c.t),set(arr){built=[];const left=[...all];arr.forEach(t=>{const j=left.findIndex(c=>c.t===t);if(j>=0)built.push(left.splice(j,1)[0])});draw()}}}
+function readTokens(n){const G=groupsOf(n),sc=SC,T=[];for(let i=G.length-1;i>=0;i--){const g=G[i];if(!g)continue;if(i===1&&g===1){T.push({t:'bin',g:i});continue}T.push({t:three(g),g:i});if(i)T.push({t:sc[i],g:i})}return T}
+function optionRow(area,opts,onPick){const g=el('div','opts');let cur=null;opts.forEach(o=>{const b=el('button','opt',o.label);b.onclick=()=>{g.querySelectorAll('.opt').forEach(x=>x.classList.remove('picked'));b.classList.add('picked');cur=o.val;onPick&&onPick(o.val)};g.append(b)});area.append(g);return {get:()=>cur}}
+function thumb(id){const T={
+ tablo:`<rect x="6" y="12" width="34" height="11" rx="3" fill="${GCOL[2]}"/><rect x="43" y="12" width="34" height="11" rx="3" fill="${GCOL[1]}"/><rect x="80" y="12" width="34" height="11" rx="3" fill="${GCOL[0]}"/>`+[...'249597890'].map((d,i)=>`<rect x="${6+i*12.2}" y="27" width="11" height="40" rx="2" fill="#fff" stroke="#DDD6FE"/><text x="${11.5+i*12.2}" y="54" text-anchor="middle" font-size="11" font-weight="900" fill="${GCOL[2-Math.floor(i/3)]}">${d}</text>`).join(''),
+ okunus:`<rect x="8" y="10" width="104" height="48" rx="14" fill="#fff" stroke="#C4B5FD" stroke-width="3"/><path d="M30 58 L26 72 L44 58" fill="#fff" stroke="#C4B5FD" stroke-width="3" stroke-linejoin="round"/><rect x="18" y="22" width="26" height="9" rx="4" fill="${GCOL[2]}"/><rect x="48" y="22" width="30" height="9" rx="4" fill="${GCOL[1]}"/><rect x="82" y="22" width="20" height="9" rx="4" fill="${GCOL[0]}"/><rect x="18" y="37" width="60" height="7" rx="3" fill="#DDD6FE"/>`,
+ abakus:`<rect x="8" y="62" width="104" height="10" rx="4" fill="#B45309"/>`+[0,1,2,3,4,5].map(i=>{const x=20+i*16.5,k=[3,0,5,2,7,4][i],g=i<3?2:1;let s=`<line x1="${x}" y1="10" x2="${x}" y2="62" stroke="#92400E" stroke-width="3"/>`;for(let b=0;b<k;b++)s+=`<ellipse cx="${x}" cy="${57-b*6.5}" rx="7" ry="3.2" fill="${i>3?GCOL[0]:GCOL[g]}"/>`;return s}).join(''),
+ cozum:`<rect x="6" y="26" width="40" height="28" rx="8" fill="#6D28D9"/><text x="26" y="45" text-anchor="middle" font-size="12" font-weight="900" fill="#fff">4052</text><path d="M50 40 H62 M58 35 L63 40 L58 45" stroke="#94A3B8" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="68" y="8" width="46" height="18" rx="5" fill="${GCOL[1]}"/><rect x="68" y="31" width="34" height="18" rx="5" fill="${GCOL[0]}"/><rect x="68" y="54" width="22" height="18" rx="5" fill="${GCOL[0]}" opacity=".7"/>`,
+ misir:`<rect x="10" y="8" width="100" height="64" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3"/><g transform="translate(18 18) scale(.95)" fill="none" stroke="#7C2D12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${EG[1000000]}</g><g transform="translate(44 18) scale(.95)" fill="none" stroke="#7C2D12" stroke-width="2.6" stroke-linecap="round">${EG[1000]}</g><g transform="translate(68 18) scale(.95)" fill="none" stroke="#7C2D12" stroke-width="2.6" stroke-linecap="round">${EG[100]}</g><g transform="translate(88 18) scale(.95)" fill="none" stroke="#7C2D12" stroke-width="2.6" stroke-linecap="round">${EG[10]}</g>`,
+ terazi:`<polygon points="52,72 68,72 62,24 58,24" fill="#94A3B8"/><g transform="rotate(-10 60 22)"><rect x="12" y="18" width="96" height="7" rx="3" fill="#6D28D9"/><line x1="22" y1="25" x2="22" y2="44" stroke="#475569" stroke-width="2"/><line x1="98" y1="25" x2="98" y2="44" stroke="#475569" stroke-width="2"/><rect x="6" y="44" width="32" height="14" rx="5" fill="#EDE9FE" stroke="#6D28D9" stroke-width="2"/><rect x="82" y="44" width="32" height="14" rx="5" fill="#FFEDD5" stroke="#F97316" stroke-width="2"/></g><circle cx="60" cy="22" r="5" fill="#F97316"/>`,
+ kart:`<g transform="rotate(-12 35 42)"><rect x="18" y="14" width="34" height="48" rx="7" fill="#312E81"/><text x="35" y="47" text-anchor="middle" font-size="24" font-weight="900" fill="#fff">7</text></g><g><rect x="43" y="10" width="34" height="48" rx="7" fill="#4C1D95"/><text x="60" y="43" text-anchor="middle" font-size="24" font-weight="900" fill="#fff">0</text></g><g transform="rotate(12 85 42)"><rect x="68" y="14" width="34" height="48" rx="7" fill="#6D28D9"/><text x="85" y="47" text-anchor="middle" font-size="24" font-weight="900" fill="#fff">4</text></g>`};
+ return `<svg viewBox="0 0 120 80" aria-hidden="true">${T[id]||''}</svg>`}
+function medalSVG(k){const c=['#CD7F32','#C0C0C0','#F5B301'][k]||'#CBD5E1';return `<svg viewBox="0 0 100 120" width="120" aria-hidden="true"><path d="M30 0 L50 40 L70 0 Z" fill="#6D28D9"/><path d="M38 0 L50 26 L62 0" fill="#F97316"/><circle cx="50" cy="72" r="40" fill="${c}" stroke="#fff" stroke-width="6"/><circle cx="50" cy="72" r="28" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="3"/><path d="M50 52 L56 66 L71 67 L59 76 L63 91 L50 83 L37 91 L41 76 L29 67 L44 66 Z" fill="#fff"/></svg>`}
+
+/* ---------- 1. BASAMAK TABLOSU ---------- */
+ST.tablo={title:'Basamak Tablosu',goal:'Rakamların basamağını, bölüğünü ve basamak değerini keşfet.',
+ info:`<p><b>Basamak:</b> Rakamın sayıdaki yeri.</p><p><b>Bölük:</b> Sağdan üçer basamaklık gruplar: <b style="color:${GCOL[0]}">birler</b>, <b style="color:${GCOL[1]}">binler</b>, <b style="color:${GCOL[2]}">milyonlar</b>, <b style="color:${GCOL[3]}">milyarlar</b>.</p><p>Her bölükte sıra sağdan sola <b>birler – onlar – yüzler</b>.</p><p><b>Basamak değeri</b> = rakam × basamağın değeri.<br>5, yüz binler basamağındaysa değeri <b>500 000</b>.</p>`,
+ intro:'Sütunlardaki <b>▲ ▼</b> düğmeleriyle sayı kur. Bir rakama dokunursan sana basamağını ve basamak değerini söylerim!',
+ mount(host,nova){const cols=lenMax();let dg=Array(cols).fill(0),edit=true,tap=false,sel=null,hide=false;
+  const box=el('div','tblwrap'),out=el('div','stout'),tools=el('div','tools');host.append(box,out,tools);
+  const val=()=>BigInt(dg.join(''));
+  function draw(){const first=dg.findIndex(d=>d>0);let h='<div class="tgroups">';
+   for(let g=Math.ceil(cols/3)-1;g>=0;g--){h+=`<div class="tgrp" style="--c:${GCOL[g]}"><div class="tgh">${GROUP[g]} bölüğü</div><div class="tcols">`;
+    for(let k=2;k>=0;k--){const p=g*3+k;if(p>=cols)continue;const i=cols-1-p,d=dg[i],lead=first<0||i<first;
+     h+=`<div class="tcol${sel===p?' sel':''}">${edit?`<button class="tu" data-i="${i}" aria-label="${PLACE[p]} artır">▲</button>`:''}<button class="td${lead?' lead':''}" data-p="${p}">${d}</button>${edit?`<button class="tu dn" data-i="${i}" data-dn="1" aria-label="${PLACE[p]} azalt">▼</button>`:''}<div class="tn">${PLACE[p]}</div><div class="tv">${!lead&&d?fmt(pv(d,p)):''}</div></div>`}
+    h+='</div></div>'}
+   box.innerHTML=h+'</div>';
+   box.querySelectorAll('.tu').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;dg[i]=(dg[i]+(b.dataset.dn?9:1))%10;sound('tick');draw()});
+   box.querySelectorAll('.td').forEach(b=>b.onclick=()=>{const p=+b.dataset.p;sel=p;draw();if(!tap){const d=dg[cols-1-p];nova.say(`Bu rakam <b>${d}</b>. ${GROUP[Math.floor(p/3)]} bölüğünün ${['birler','onlar','yüzler'][p%3]} basamağında, yani <b>${lowName(p)} basamağında</b>.<br>Basamak değeri: ${d} × ${fmt(P10(p))} = <b>${fmt(pv(d,p))}</b>`,'wow')}});
+   const v=val();out.innerHTML=hide?'<div class="stbig hid">? ? ?</div><div class="stwords muted">Sayı gizli: tabloyu kullanarak kur</div>':`<div class="stbig">${numHTML(v,{color:true})}</div><div class="stwords">${cap(words(v))}</div>`}
+  function set(n){dg=String(n).padStart(cols,'0').slice(-cols).split('').map(Number);sel=null;draw();requestAnimationFrame(()=>{box.scrollLeft=box.scrollWidth})}
+  const r=el('button','btn btn-p','🎲 Rastgele sayı');r.onclick=()=>set(randNum(lenR(5),.3));const z=el('button','btn','↺ Sıfırla');z.onclick=()=>set(0);
+  const row=el('div','row center');row.append(r,z);tools.append(row,presetRow(set));
+  return {get:val,set,sel:()=>sel,setSel(p){sel=p;draw()},
+   explore(){edit=true;tap=false;hide=false;tools.classList.remove('hidden');set(val()||149597890n)},
+   task(o){edit=o.edit!==false;tap=!!o.tap;hide=!!o.hide;tools.classList.add('hidden');set(o.n||0)}}},
+ tasks(){const L=S.level==3?rnd(13,30):Math.min(lenMax(),rnd(7,9)),T=[];
+  const n1=ensureZero(randNum(L,.35));
+  T.push({text:`Tabloda <b>“${words(n1)}”</b> sayısını oluştur.`,setup:c=>c.task({n:0,hide:true}),check:c=>c.get()===n1?{ok:true,msg:`${fmt(n1)} sayısını doğru kurdun.`}:{ok:false,msg:hintBuild(c.get(),n1)},show:c=>c.task({n:n1}),why:'Boş basamaklara 0 gelir.'});
+  const n2=randNum(L,.15),p2=rnd(0,L-1);
+  T.push({text:`Sayının <b>${lowName(p2)} basamağındaki</b> rakama dokun.`,setup:c=>c.task({n:n2,edit:false,tap:true}),
+   check:c=>{const s=c.sel();if(s==null)return{wait:1,msg:'Önce bir rakama dokun.'};if(s===p2)return{ok:true,msg:`${dAt(n2,p2)} rakamı ${lowName(p2)} basamağında.`};
+    return{ok:false,msg:`Dokunduğun rakam ${lowName(s)} basamağında. `+(Math.floor(s/3)!==Math.floor(p2/3)?`Önce <b>${GROUP[Math.floor(p2/3)].toLocaleLowerCase('tr')} bölüğünü</b> bul.`:'Bölük doğru! Şimdi bölük içindeki sıraya bak: birler – onlar – yüzler.')}},show:c=>c.setSel(p2)});
+  const n3=randNum(L,.12),ps=[];for(let p=3;p<L;p++)if(dAt(n3,p))ps.push(p);const p3=ps.length?pick(ps):L-1,v3=pv(dAt(n3,p3),p3);
+  T.push({text:`Basamak değeri <b>${fmt(v3)}</b> olan rakama dokun.`,setup:c=>c.task({n:n3,edit:false,tap:true}),
+   check:c=>{const s=c.sel();if(s==null)return{wait:1,msg:'Önce bir rakama dokun.'};if(s===p3)return{ok:true,msg:`${dAt(n3,p3)} × ${fmt(10**p3)} = ${fmt(v3)}`};
+    return{ok:false,msg:`Bu rakamın basamak değeri ${fmt(pv(dAt(n3,s),s))}. İpucu: ${fmt(v3)} sayısında rakamdan sonra <b>${p3} tane sıfır</b> var; sağdan <b>${p3+1}. basamağa</b> bak.`}},show:c=>c.setSel(p3)});
+  const n4=randNum(L,.2),G4=groupsOf(n4),gi=rnd(0,G4.length-2);let ng;do{ng=Math.random()<.5?rnd(1,99):rnd(100,999)}while(ng===G4[gi]);const t4=n4+B(ng-G4[gi])*P10(3*gi);
+  T.push({text:`Sayının yalnızca <b style="color:${GCOL[gi]}">${GROUP[gi].toLocaleLowerCase('tr')} bölüğünü</b> <b>${ng}</b> yap. Diğer bölükler değişmesin.`,setup:c=>c.task({n:n4}),
+   check:c=>{const v=c.get(),G=groupsOf(v);if(v===t4)return{ok:true,msg:`Bölük üç basamaktır: ${String(ng).padStart(3,'0')}.`};if(G[gi]===ng)return{ok:false,msg:'Bölük doğru ama başka bir bölüğü de değiştirdin. Onları eski hâline getir.'};
+    return{ok:false,msg:`${GROUP[gi]} bölüğünün üç basamağına sırasıyla <b>${String(ng).padStart(3,'0').split('').join(' – ')}</b> yazılmalı (yüzler – onlar – birler).`}},show:c=>c.task({n:t4})});
+  const k=rnd(6,L),mx=Math.random()<.5,t5=mx?P10(k)-1n:P10(k-1);
+  T.push({text:`Tabloda <b>${k} basamaklı en ${mx?'büyük':'küçük'}</b> doğal sayıyı oluştur.`,setup:c=>c.task({n:0}),
+   check:c=>{const v=c.get();if(v===t5)return{ok:true,msg:mx?'Bütün basamaklar en büyük rakam 9 olmalı.':'En soldaki basamak 1, diğerleri 0.'};if(lenOf(v)!==k)return{ok:false,msg:`Sayın ${v?lenOf(v):0} basamaklı, <b>${k}</b> basamaklı olmalı.`};
+    return{ok:false,msg:mx?'En büyük rakam hangisi? Her basamağa onu yaz.':'En soldaki basamak 0 olamaz; en küçük sıfır olmayan rakam 1. Diğer basamaklar?'}},show:c=>c.task({n:t5})});
+  return T}};
+
+/* ---------- 2. OKUNUŞ VE BÖLÜKLER ---------- */
+ST.okunus={title:'Okunuş ve Bölükler',goal:'Sayıyı bölüklere ayırarak doğru ve akıcı oku.',
+ info:`<p><b>Okuma kuralı:</b></p><ol><li>Sayıyı sağdan başlayarak <b>üçerli</b> ayır.</li><li>En soldaki bölükten başla: önce bölükteki sayıyı oku, sonra <b>bölüğün adını</b> söyle.</li><li><b>000</b> olan bölük okunmaz.</li><li>Birler bölüğünün adı söylenmez.</li></ol><p>“1 000” <b>bin</b> diye okunur, “bir bin” denmez.</p>`,
+ intro:'Bir sayı yaz ya da rastgele seç. <b>✂ Bölüklere ayır</b> ve <b>▶ Adım adım oku</b> düğmeleriyle okumayı izle. Ses açıksa sana sesli de okurum!',
+ mount(host,nova){let n=149597890n,split=false,step=-1,hide=false,quiz=false,tm=null;
+  const inp=numInput('Bir sayı yaz',v=>{n=v;stop();draw()}),bR=el('button','btn btn-p','🎲 Rastgele'),bS=el('button','btn','✂ Bölüklere ayır'),bP=el('button','btn btn-a','▶ Adım adım oku');
+  const tools=el('div','tools'),row=el('div','row center');row.append(inp,bR,bS,bP);tools.append(row,presetRow(v=>{n=v;inp.value=fmt(v);stop();draw()}));
+  const disp=el('div','gs'),line=el('div','readline');host.append(tools,disp,line);
+  const G=()=>groupsOf(n);const ph=(g,i)=>g===0?'000 → okunmaz':(i===1&&g===1?'bin':three(g)+(i?' '+SC[i]:''));
+  function draw(){const g=G(),ngp=g.length;disp.className='gs'+(split?' split':'')+(quiz?' quiz':'');
+   disp.innerHTML=hide?'':g.map((v,i)=>({v,i})).reverse().map(({v,i},k)=>`<div class="gbox${step===k?' on':''}${step>k?' done':''}" style="--c:${GCOL[i]}"><div class="gdig">${k===0?v:String(v).padStart(3,'0')}</div><div class="glab">${GROUP[i]} bölüğü</div><div class="gph">${ph(v,i)}</div></div>`).join('');
+   if(hide||quiz){line.innerHTML=quiz?'<span class="muted">Okunuşu sen oluştur 👇</span>':'';return}
+   if(step<0)line.innerHTML=`<span class="muted">Okunuşu:</span> <b>${cap(words(n))}</b>`;
+   else line.innerHTML=g.map((v,i)=>({v,i})).reverse().slice(0,step+1).map(({v,i},k)=>v?`<span class="rp${k===step?' cur':''}" style="color:${GCOL[i]}">${ph(v,i)}</span>`:'').join(' ')}
+  function stop(){if(tm){clearInterval(tm);tm=null}step=-1}
+  bR.onclick=()=>{n=randNum(lenR(5,30),.3);inp.value=fmt(n);stop();draw()};
+  bS.onclick=()=>{split=!split;bS.textContent=split?'🔗 Birleştir':'✂ Bölüklere ayır';draw();if(split)nova.say('Sağdan başlayarak üçerli ayırdım. Her renk bir <b>bölük</b>.','wow')};
+  bP.onclick=()=>{stop();split=true;bS.textContent='🔗 Birleştir';step=0;const g=G();const say=()=>{draw();const k=step,i=g.length-1-k,v=g[i];if(v)speak(ph(v,i));nova.say(v?`<b style="color:${GCOL[i]}">${GROUP[i]} bölüğü:</b> ${String(v)} → “${ph(v,i)}”`:`<b>${GROUP[i]} bölüğü 000</b>, bu bölüğü okumuyoruz.`,'wow')};say();
+   tm=setInterval(()=>{step++;if(step>=g.length){stop();draw();nova.say(`Tamamı: <b>${cap(words(n))}</b>`,'happy');return}say()},1900)};
+  return {explore(){hide=false;quiz=false;tools.classList.remove('hidden');stop();inp.value=fmt(n);draw()},task(o){stop();n=o.n;split=!!o.split;hide=!!o.hide;quiz=!!o.quiz;tools.classList.add('hidden');draw()},stop}},
+ tasks(){const T=[];const lens=S.level==3?[rnd(13,15),rnd(16,20),rnd(21,27)]:[rnd(5,6),rnd(7,8),rnd(8,lenMax())];
+  lens.forEach((L,ix)=>{let n=randNum(L,.33);if(ix===1){const s=String(n);n=B(s.slice(0,s.length-6)+'000'+s.slice(-3))}const toks=readTokens(n).map(x=>x.t);const used=new Set(toks);
+   const ex=[['bin','milyon','milyar'].find(x=>!used.has(x))||'bin',three(rnd(11,999))];let cb;
+   T.push({text:`Sayının okunuşunu kartları <b>sırayla</b> seçerek oluştur.`,setup:(c,a)=>{c.task({n,split:ix===0,quiz:true});cb=chipBuilder(a,toks,ex)},
+    check:()=>{const b=cb.get();if(!b.length)return{wait:1,msg:'Kartlara dokunarak okunuşu oluştur.'};if(b.join(' ')===toks.join(' '))return{ok:true,msg:`“${cap(words(n))}”`};
+     let i=0;while(b[i]===toks[i])i++;const RT=readTokens(n);const gi=RT[Math.min(i,RT.length-1)].g;return{ok:false,msg:(i?`İlk ${i} kart doğru. `:'')+`Şimdi <b style="color:${GCOL[gi]}">${GROUP[gi].toLocaleLowerCase('tr')} bölüğünü</b> oku: önce bölükteki sayı, sonra bölüğün adı.`}},
+    show:()=>cb.set(toks),why:'Her bölük okunur, sonra bölük adı söylenir.'})});
+  for(let k=0;k<2;k++){const L=lenR(7,24);const n=randNum(L,.38),G=groupsOf(n);let ins=[];
+   T.push({text:`Okunuşu verilen sayının <b>bölüklerindeki sayıları</b> kutulara yaz:<div class="words" style="margin-top:8px">${cap(words(n))}</div>`,setup:(c,a)=>{c.task({n,hide:true});const w=el('div','gin');ins=[];
+     for(let i=G.length-1;i>=0;i--){const f=el('label','gfield',`<span style="background:${GCOL[i]}">${GROUP[i]} bölüğü</span>`);const x=el('input');x.type='text';x.inputMode='numeric';x.maxLength=3;x.oninput=()=>{x.value=x.value.replace(/\D/g,'')};f.append(x);w.append(f);ins[i]=x}a.append(w)},
+    check:()=>{if(ins.some(x=>x.value===''))return{wait:1,msg:'Bütün kutuları doldur. Okunmayan bölüğe <b>000</b> yaz.'};const bad=G.findIndex((g,i)=>+ins[i].value!==g);
+     if(bad<0)return{ok:true,msg:`Sayı: <b>${fmt(n)}</b>`};return{ok:false,msg:`<b>${GROUP[bad]} bölüğünü</b> yeniden düşün. ${G[bad]===0?'Okunuşta bu bölük hiç geçmiyor; o zaman ne yazmalısın?':'Okunuşta bölük adından hemen önce söylenen sayıya bak.'}`}},
+    show:()=>{G.forEach((g,i)=>ins[i].value=i===G.length-1?g:String(g).padStart(3,'0'))}})}
+  return T}};
+
+/* ---------- 3. ABAKÜS ---------- */
+ST.abakus={title:'Abaküs',goal:'Boncuklarla sayı kur; boş çubuğun 0 olduğunu gör.',
+ info:`<p>Her çubuk bir <b>basamaktır</b>. Çubuktaki boncuk sayısı o basamaktaki <b>rakamı</b> gösterir.</p><p>Boncuksuz çubuk = <b>0</b>. Boş çubuğu atlarsan basamaklar kayar!</p><p>Bir çubuğa en çok <b>9</b> boncuk takılır.</p><p>Renkler bölükleri gösterir.</p>`,
+ intro:'Çubuğa dokun ya da <b>+ / −</b> ile boncuk ekle. Sayı ve okunuşu altta anında değişir.',
+ mount(host,nova){const cols=Math.min(12,lenMax());let hide=false;const w=el('div','abwrap'),out=el('div','stout'),tools=el('div','tools');host.append(w,out,tools);
+  const draw=()=>{const v=ab.get();out.innerHTML=hide?'<div class="stbig hid">? ? ?</div><div class="stwords muted">Sayı gizli: boncukları sen yerleştir</div>':`<div class="stbig">${numHTML(v,{color:true})}</div><div class="stwords">${cap(words(v))}</div>`};
+  const ab=abacus(w,cols,0,{onChange:draw});const r=el('button','btn btn-p','🎲 Rastgele'),z=el('button','btn','↺ Temizle');r.onclick=()=>{ab.set(randNum(lenR(5),.3));draw()};z.onclick=()=>{ab.set(0);draw()};
+  const row=el('div','row center');row.append(r,z);tools.append(row,presetRow(v=>{ab.set(v);draw()}));
+  return {get:ab.get,explore(){hide=false;tools.classList.remove('hidden');if(!ab.get())ab.set(4052300);draw()},task(o){hide=!!o.hide;tools.classList.add('hidden');ab.set(o.n||0);draw()}}},
+ tasks(){const T=[],L=Math.min(12,lenMax(),rnd(7,9));
+  const n1=ensureZero(randNum(L,.3)),n2=ensureZero(randNum(L,.5));
+  [n1,n2].forEach(n=>T.push({text:`Abaküste <b>“${words(n)}”</b> sayısını göster.`,setup:c=>c.task({n:0,hide:true}),check:c=>c.get()===n?{ok:true,msg:`${fmt(n)}: boş çubuklar 0 oldu.`}:{ok:false,msg:hintBuild(c.get(),n)},show:c=>c.task({n}),why:'0 olan basamağın çubuğu boş kalır.'}));
+  const n3=randNum(L,.2),ps=[];for(let p=2;p<L;p++)if(dAt(n3,p)<9)ps.push(p);const p3=ps.length?pick(ps):0,t3=n3+P10(p3);
+  T.push({text:`Abaküsteki sayıyı <b>${fmt(P10(p3))}</b> artır.`,setup:c=>c.task({n:n3}),check:c=>{const v=c.get();if(v===t3)return{ok:true,msg:`${fmt(n3)} + ${fmt(P10(p3))} = ${fmt(t3)}. Sadece ${lowName(p3)} çubuğuna 1 boncuk ekledin.`};
+   return{ok:false,msg:`${fmt(P10(p3))} hangi basamağın 1 birimi? O basamağın çubuğuna <b>yalnızca 1 boncuk</b> eklemelisin.`}},show:c=>c.task({n:t3})});
+  const n4=ensureZero(randNum(L,.35));T.push({text:`Çözümlenmiş hâli verilen sayıyı abaküste göster:<div class="words mono" style="margin-top:8px;font-size:1.05rem">${sumForm(n4,true)}</div>`,setup:c=>c.task({n:0,hide:true}),check:c=>c.get()===n4?{ok:true,msg:`${fmt(n4)}`}:{ok:false,msg:hintBuild(c.get(),n4)},show:c=>c.task({n:n4})});
+  const p5=rnd(4,Math.min(12,lenMax())-1),T5=P10(p5);T.push({text:`<b>Tek bir boncukla</b> “${words(T5)}” sayısını göster.`,setup:c=>c.task({n:0,hide:true}),check:c=>{const v=c.get();if(v===T5)return{ok:true,msg:`1 boncuk ${lowName(p5)} çubuğunda = ${fmt(T5)}`};
+   return{ok:false,msg:v&&String(v).replace(/0/g,'')==='1'?`Bir boncuk doğru ama çubuk yanlış: bu ${fmt(v)} oldu. ${fmt(T5)} sayısında 1'den sonra <b>${p5} sıfır</b> var.`:'Sadece bir boncuk kullanmalısın. Hangi çubuğa?'}},show:c=>c.task({n:T5})});
+  return T}};
+
+/* ---------- 4. ÇÖZÜMLEME ---------- */
+ST.cozum={title:'Çözümleme',goal:'Sayıyı basamak değerlerine ayır, parçalardan sayıyı yeniden kur.',
+ info:`<p><b>Çözümleme:</b> Sayıyı rakamlarının basamak değerlerinin toplamı olarak yazmaktır.</p><p>2 140 503 = (2 × 1 000 000) + (1 × 100 000) + (4 × 10 000) + (5 × 100) + (3 × 1)</p><p>veya 2 000 000 + 100 000 + 40 000 + 500 + 3</p><p><b>0</b> olan basamaklar çözümlemede yazılmaz ama sayıyı yazarken yerleri <b>0</b> ile doldurulur.</p>`,
+ intro:'Bir sayı yaz ve <b>🧩 Parçala</b>ya bas. Her rakam kendi basamak değeri kartına dönüşür.',
+ mount(host,nova){let n=2140503n,times=true,parted=false,hideNum=false,miss=null,shuf=false;
+  const inp=numInput('Bir sayı yaz',v=>{n=v;parted=false;draw()}),bR=el('button','btn btn-p','🎲 Rastgele'),bP=el('button','btn btn-a','🧩 Parçala'),bF=el('button','btn','✖ / ➕ Yazılış');
+  const tools=el('div','tools'),row=el('div','row center');row.append(inp,bR,bP,bF);tools.append(row);const eq=el('div','eqline'),cards=el('div','vcards');host.append(tools,eq,cards);
+  const parts=()=>{const s=String(n),L=s.length,a=[];for(let i=0;i<L;i++){const p=L-1-i,d=+s[i];if(d)a.push({p,d})}return a};
+  function draw(){const P=parts();const term=x=>times?`(${x.d} × ${fmt(P10(x.p))})`:fmt(pv(x.d,x.p));
+   eq.innerHTML=`<span class="eqn">${hideNum?'<span class="qbox">?</span>':numHTML(n,{color:true})}</span> <b>=</b> `+P.map(x=>miss===x.p?'<span class="qbox">?</span>':`<span style="color:${GCOL[Math.floor(x.p/3)]}">${term(x)}</span>`).join(' <b>+</b> ');
+   const C=shuf?shuffle(P):P;cards.innerHTML=parted?C.map((x,k)=>`<div class="vcard" style="--c:${GCOL[Math.floor(x.p/3)]};animation-delay:${k*90}ms"><div class="vp">${PLACE[x.p]}</div><div class="vt">${x.d} × ${fmt(P10(x.p))}</div><div class="vv">${fmt(pv(x.d,x.p))}</div></div>`).join(''):''}
+  bR.onclick=()=>{n=randNum(lenR(5,30),.3);inp.value=fmt(n);parted=false;draw()};bP.onclick=()=>{parted=!parted;bP.textContent=parted?'🔗 Birleştir':'🧩 Parçala';draw();if(parted)nova.say(`${parts().length} parça! Sıfır olan basamaklar parça vermez ama sayıda yer tutar.`,'wow')};
+  bF.onclick=()=>{times=!times;draw()};
+  return {explore(){hideNum=false;miss=null;shuf=false;tools.classList.remove('hidden');inp.value=fmt(n);draw()},task(o){n=o.n;times=o.times!==false;parted=!!o.parted;hideNum=!!o.hideNum;miss=o.miss==null?null:o.miss;shuf=!!o.shuf;tools.classList.add('hidden');draw()}}},
+ tasks(){const T=[];
+  for(let k=0;k<5;k++){const L=lenR(6,24),n=ensureZero(randNum(L,.3));
+   if(k%2===0){const s=String(n),nz=[];for(let p=1;p<L;p++)if(dAt(n,p))nz.push(p);const p=pick(nz),d=dAt(n,p),v=pv(d,p);let op;
+    const c=[{val:B(d)},{val:pv(d,p+1)},{val:pv(d,p-1)},{val:dAt(n,p-1)?pv(dAt(n,p-1),p):null}];
+    T.push({text:`Çözümlemedeki <b>eksik parçayı</b> bul.`,setup:(cc,a)=>{cc.task({n,times:false,miss:p});op=optionRow(a,mkOptions(v,c,x=>fmt(x),()=>({val:pv(d,rnd(0,11))})))},
+     check:()=>{const x=op.get();if(x==null)return{wait:1,msg:'Bir seçeneğe dokun.'};if(x===v)return{ok:true,msg:`${d} rakamı ${lowName(p)} basamağında: ${d} × ${fmt(P10(p))} = ${fmt(v)}`};
+      return{ok:false,msg:x===B(d)?'Bu sadece rakam! Basamak değerini yazmalısın.':`Eksik parça <b>${lowName(p)} basamağına</b> ait. Sayıda bu basamakta hangi rakam var, değeri ne olur?`}},show:cc=>cc.task({n,times:false})});
+   }else{let kp;T.push({text:`Basamak değeri kartlarından oluşan sayıyı yaz.`,setup:(cc,a)=>{cc.task({n,parted:true,hideNum:true,shuf:true});kp=keypad(a,12,()=>checkTask())},
+     check:()=>{if(!kp.get())return{wait:1,msg:'Sayıyı tuş takımıyla yaz.'};const v=B(kp.get());return v===n?{ok:true,msg:`${fmt(n)}`}:{ok:false,msg:hintBuild(v,n)}},show:cc=>cc.task({n,parted:true}),why:'Kartların gelmediği basamaklara 0 yazılır.'})}}
+  return T}};
+
+/* ---------- 5. MISIR SEMBOLLERİ ---------- */
+const EGV=[1,10,100,1000,10000,100000,1000000],EGN=['çizgi','topuk kemiği','halat','nilüfer','parmak','iribaş','tanrı Heh'];
+ST.misir={title:'Eski Mısır Sembolleri',goal:'Mısırlıların sayı sembolleriyle onluk sistemi keşfet.',
+ info:`<p>Eski Mısırlılar her basamak için ayrı bir <b>sembol</b> kullanırdı ve sembolü gerektiği kadar tekrar ederlerdi.</p><p>Sıfır için sembolleri yoktu: o basamağın sembolü hiç çizilmezdi.</p><p><b>10 tane aynı sembol = 1 tane bir üst sembol.</b> Bu, bizim <b>onluk</b> sistemimizin de kuralıdır!</p>`+egLegend(),
+ intro:'Alttaki sembollere dokunarak papirüse yaz. Bir sembolü silmek için papirüsteki sembole dokun. <b>10 tane aynı sembol yazarsan ne olacağını gör!</b>',
+ mount(host,nova){let cnt=Array(7).fill(0),ro=false,hide=false;
+  const pap=el('div','papyrus'),valb=el('div','stout'),pal=el('div','egpal');host.append(pap,valb,pal);
+  const val=()=>cnt.reduce((s,c,i)=>s+c*EGV[i],0);
+  function draw(){pap.innerHTML=cnt.every(c=>!c)?'<span class="muted">Papirüs boş</span>':cnt.map((c,i)=>({c,i})).reverse().filter(x=>x.c).map(x=>`<span class="egg">${Array.from({length:x.c},()=>`<button class="egs" data-i="${x.i}" aria-label="${fmt(EGV[x.i])} sembolünü sil">${egSVG(EGV[x.i],26)}</button>`).join('')}</span>`).join('');
+   pap.querySelectorAll('.egs').forEach(b=>b.onclick=()=>{if(ro)return;cnt[+b.dataset.i]--;draw()});const v=val();
+   valb.innerHTML=hide?'<div class="stbig hid">? ? ?</div>':`<div class="stbig">${numHTML(v,{color:true})}</div><div class="stwords mono">${cnt.map((c,i)=>({c,i})).reverse().filter(x=>x.c).map(x=>`${x.c} × ${fmt(EGV[x.i])}`).join(' + ')||'—'}</div>`}
+  EGV.forEach((v,i)=>{const b=el('button','egbtn',`${egSVG(v,30)}<span>${fmt(v)}</span><small>${EGN[i]}</small>`);b.onclick=()=>{if(ro)return;cnt[i]++;sound('tick');
+   if(cnt[i]===10){if(i<6){cnt[i]=0;cnt[i+1]++;nova.say(`<b>10 tane ${EGN[i]}</b> = 1 tane <b>${EGN[i+1]}</b>! ${fmt(10*v)} = ${fmt(EGV[i+1])}. Onluk sistem işte bu!`,'wow')}else{cnt[i]=9;nova.say('Mısırlıların en büyük sembolü 1 000 000 idi.','think')}}draw()};pal.append(b)});
+  const z=el('button','btn','↺ Papirüsü temizle');z.onclick=()=>{cnt.fill(0);draw()};pal.append(z);
+  const set=n=>{cnt=EGV.map((_,i)=>dAt(n,i));draw()};
+  return {get:val,explore(){ro=false;hide=false;pal.classList.remove('hidden');if(!val())set(2140503);else draw()},task(o){ro=!!o.ro;hide=!!o.hide;pal.classList.toggle('hidden',ro);set(o.n||0)}}},
+ tasks(){const T=[],mk=()=>{const L=rnd(4,7);let s=''+rnd(1,5);for(let i=1;i<L;i++)s+=Math.random()<.3?'0':rnd(1,5);return +s};
+  for(let k=0;k<5;k++){const n=mk();if(k%2===0)T.push({text:`Papirüse <b>${fmt(n)}</b> sayısını Mısır sembolleriyle yaz.`,setup:c=>c.task({n:0,hide:true}),check:c=>{const v=c.get();if(v===n)return{ok:true,msg:sumForm(n,true)};
+    const bad=[6,5,4,3,2,1,0].find(p=>dAt(v,p)!==dAt(n,p));return{ok:false,msg:`<b>${fmt(10**bad)}</b> sembolünden kaç tane olmalı? Sayının ${lowName(bad)} basamağındaki rakama bak.`}},show:c=>c.task({n})});
+   else{let kp;T.push({text:'Papirüsteki sayıyı rakamlarla yaz.',setup:(c,a)=>{c.task({n,ro:true,hide:true});kp=keypad(a,7,()=>checkTask())},check:()=>{if(!kp.get())return{wait:1,msg:'Sayıyı tuş takımıyla yaz.'};const v=+kp.get();
+     return v===n?{ok:true,msg:sumForm(n,true)}:{ok:false,msg:(compress(v)===compress(n)?'Rakamlar doğru ama <b>sembolü olmayan basamağa 0</b> yazmayı unutma. ':'')+'Her sembol türünü say ve kendi basamağına yaz.'}},show:c=>c.task({n,ro:true}),why:'Sembolü olmayan basamak 0 olur.'})}}
+  return T}};
+
+/* ---------- 6. KARŞILAŞTIRMA TERAZİSİ ---------- */
+ST.terazi={title:'Karşılaştırma Terazisi',goal:'İki sayıyı adım adım karşılaştır, < ve > sembollerini doğru kullan.',
+ info:`<p><b>1. adım:</b> Basamak sayılarına bak. Basamak sayısı fazla olan büyüktür.</p><p><b>2. adım:</b> Basamak sayıları eşitse <b>en soldan</b> başla, rakamları karşılaştır. İlk farklı rakamı büyük olan sayı büyüktür.</p><p><b>&lt;</b> ve <b>&gt;</b> sembolünün açık ağzı büyük sayıya bakar.</p>`,
+ intro:'A ve B sayılarını yaz. Terazi büyük olan tarafa iner. <b>Adım adım karşılaştır</b> ile nedenini gör.',
+ mount(host,nova){let a=149597890n,b=227936640n,cover=false;const fs=x=>{const l=fmt(x).length;return l>15?Math.max(5,Math.floor(15*15/l)):15};
+  const iA=numInput('A sayısı',v=>{a=v;draw(true)}),iB=numInput('B sayısı',v=>{b=v;draw(true)}),bs=el('button','btn btn-a','🔍 Adım adım karşılaştır');
+  const tools=el('div','tools'),row=el('div','row center');row.append(el('b',null,'A:'),iA,el('b',null,'B:'),iB);
+  const sw=el('div','row center swrow','<span class="muted">B = A\'nın</span><select data-s="a"><option value="0">birler</option><option value="1" selected>binler</option><option value="2">milyonlar</option></select><span class="muted">ile</span><select data-s="b"><option value="0" selected>birler</option><option value="1">binler</option><option value="2">milyonlar</option></select>');
+  const swb=el('button','btn','🔁 bölüklerinin yer değiştirmiş hâli');sw.append(swb);
+  const r2=el('div','row center');r2.append(bs);tools.append(row,r2,sw);
+  const svg=el('div','scalebox'),steps=el('div','steps');host.append(tools,svg,steps);
+  function draw(live){const ang=cover?0:a>b?-10:a<b?10:0;
+   svg.innerHTML=`<svg class="scale" viewBox="0 0 440 230"><polygon points="196,222 244,222 228,86 212,86" fill="#94A3B8"/><g class="beam" style="transform:rotate(${ang}deg)"><rect x="30" y="70" width="380" height="14" rx="7" fill="#6D28D9"/><line x1="80" y1="84" x2="80" y2="128" stroke="#475569" stroke-width="2.5"/><line x1="360" y1="84" x2="360" y2="128" stroke="#475569" stroke-width="2.5"/>
+    <rect x="4" y="128" width="152" height="54" rx="12" fill="#EDE9FE" stroke="#6D28D9" stroke-width="3"/><text x="80" y="152" text-anchor="middle" font-size="13" font-weight="900" fill="#4C1D95">A</text><text x="80" y="172" text-anchor="middle" font-size="${fs(a)}" font-weight="900" fill="#4C1D95">${fmt(a)}</text>
+    <rect x="284" y="128" width="152" height="54" rx="12" fill="#FFEDD5" stroke="#F97316" stroke-width="3"/><text x="360" y="152" text-anchor="middle" font-size="13" font-weight="900" fill="#9A3412">B</text><text x="360" y="172" text-anchor="middle" font-size="${fs(b)}" font-weight="900" fill="#9A3412">${fmt(b)}</text></g>
+    <circle cx="220" cy="77" r="11" fill="#F97316"/>${cover?'<g><circle cx="220" cy="40" r="26" fill="#1E1B4B"/><text x="220" y="52" text-anchor="middle" font-size="34" font-weight="900" fill="#FACC15">?</text></g>':`<text x="220" y="48" text-anchor="middle" font-size="38" font-weight="900" fill="#F97316">${a>b?'&gt;':a<b?'&lt;':'='}</text>`}</svg>`;
+   if(live)steps.innerHTML=''}
+  function explain(){const sa=String(a),sb=String(b);let h=`<div class="stp" style="animation-delay:0ms"><b>1. adım – Basamak sayıları:</b> A ${sa.length}, B ${sb.length} basamaklı.</div>`;
+   if(sa.length!==sb.length)h+=`<div class="stp" style="animation-delay:500ms">Basamak sayısı fazla olan <b>${sa.length>sb.length?'A':'B'}</b> büyüktür. İlk rakamlara bakmaya gerek yok!</div>`;
+   else if(a===b)h+='<div class="stp" style="animation-delay:500ms">Bütün basamaklar aynı: <b>A = B</b></div>';
+   else{let i=0;while(sa[i]===sb[i])i++;const L=sa.length,cell=(s,j)=>`<span class="cd${j<i?' same':j===i?' diff':''}">${s[j]}</span>`;
+    const rowH=s=>[...s].map((_,j)=>((L-j)%3===0&&j?'<span class="cgap"></span>':'')+cell(s,j)).join('');
+    h+=`<div class="stp" style="animation-delay:500ms"><b>2. adım – Soldan karşılaştır:</b><div class="cmpgrid"><div><b>A</b> ${rowH(sa)}</div><div><b>B</b> ${rowH(sb)}</div></div>Aynı olan rakamları geçtik. İlk farklı rakam <b>${lowName(L-1-i)} basamağında</b>: ${sa[i]} ${sa[i]>sb[i]?'&gt;':'&lt;'} ${sb[i]}</div>`}
+   h+=`<div class="stp res" style="animation-delay:1000ms">${fmt(a)} <b>${a>b?'&gt;':a<b?'&lt;':'='}</b> ${fmt(b)}</div>`;steps.innerHTML=h}
+  bs.onclick=()=>{cover=false;draw();explain()};
+  swb.onclick=()=>{const x=+sw.querySelector('[data-s=a]').value,y=+sw.querySelector('[data-s=b]').value;if(x===y){toast('İki farklı bölük seç');return}const G=groupsOf(a);while(G.length<=Math.max(x,y))G.push(0);[G[x],G[y]]=[G[y],G[x]];b=fromGroups(G);iB.value=fmt(b);draw(true);nova.say('B sayısı, A\'nın iki bölüğünün yer değiştirmesiyle oluştu. Sence hangisi büyük? Tahmin et, sonra karşılaştır.','think')};
+  return {explore(){cover=false;tools.classList.remove('hidden');iA.value=fmt(a);iB.value=fmt(b);draw(true)},task(o){a=o.a;b=o.b;cover=true;tools.classList.add('hidden');draw(true)},reveal(){cover=false;draw();explain()}}},
+ tasks(){const T=[],pairs=[];const L=()=>lenR(6,30);
+  {const l=L();pairs.push([B('1'+String(randNum(l,.2)).slice(1)),B('9'+String(randNum(l-1,.2)).slice(1))])}
+  {const l=L(),a=randNum(l,.2),p=rnd(1,l-3);let b=setDigit(a,p,(dAt(a,p)+rnd(1,8))%10);for(let q=0;q<p;q++)b=setDigit(b,q,rnd(0,9));pairs.push([a,b])}
+  {const x=shuffle(PL_DIST).slice(0,2);pairs.push([B(x[0][2]),B(x[1][2])])}
+  {const f=shuffle(FIDAN).slice(0,2);pairs.push([B(f[0][1]),B(f[1][1])])}
+  {const a=randNum(S.level==3?rnd(13,24):rnd(7,9),.15),G=groupsOf(a);[G[0],G[1]]=[G[1],G[0]];pairs.push([a,fromGroups(G)])}
+  pairs.forEach(([a,b],k)=>{if(Math.random()<.5&&k!==4)[a,b]=[b,a];const ans=a>b?'>':a<b?'<':'=';let op;
+   T.push({text:k===2?'Hangi gezegen Güneş\'e daha uzak? Önce tahmin et: A ? B':k===3?'Hangi yıl daha çok fidan dikildi? Önce tahmin et: A ? B':k===4?'B, A\'nın birler ve binler bölüklerinin yer değiştirmesiyle oluştu. Tahmin et: A ? B':'Terazi hangi tarafa iner? Doğru sembolü seç: A ? B',
+    setup:(c,a2)=>{c.task({a,b});op=optionRow(a2,[{label:'A &gt; B',val:'>'},{label:'A = B',val:'='},{label:'A &lt; B',val:'<'}])},
+    check:c=>{const x=op.get();if(x==null)return{wait:1,msg:'Bir sembol seç.'};c.reveal();return x===ans?{ok:true,msg:'Terazi tahminini doğruladı. Adımları incele.'}:{ok:false,msg:'Terazi farklı bir sonuç gösterdi. Adımları incele: önce basamak sayısı, sonra soldan ilk farklı rakam.'}},show:c=>c.reveal()})});
+  return T}};
+
+/* ---------- 7. KART ATÖLYESİ ---------- */
+const KTX={max:'en büyük',min:'en küçük',maxOdd:'en büyük tek',minEven:'en küçük çift',maxEven:'en büyük çift',minOdd:'en küçük tek'};
+ST.kart={title:'Kart Atölyesi',goal:'Rakam kartlarıyla en büyük, en küçük, tek ve çift sayıları kur.',
+ info:`<p><b>En büyük sayı:</b> büyük rakamlar sola.</p><p><b>En küçük sayı:</b> küçük rakamlar sola, ama <b>0 başa gelemez</b>; 0 ikinci sıraya geçer.</p><p><b>Tek / çift:</b> birler basamağındaki rakama bakılır. Önce birler basamağına uygun rakamı seç, kalanları sırala.</p>`,
+ intro:'Kartlara dokunarak sayı kur. Sonra <b>En büyük</b>, <b>En küçük</b> gibi düğmelere basıp kartların nasıl dizildiğini izle.',
+ mount(host,nova){let deck=[0,1,2,3,4,5,6,7,8,9],placed=[],free=true,k=0;
+  const cw=el('div','cards'),sw=el('div','slots'),info=el('div','stwords kinfo'),tools=el('div','row center tools');host.append(cw,sw,info,tools);
+  function draw(){cw.innerHTML='';deck.forEach((d,ci)=>{const b=el('button','cardb'+(placed.includes(ci)?' used':''),String(d));b.onclick=()=>{if(placed.includes(ci))return;if(!free&&placed.length>=k)return;placed.push(ci);sound('tick');draw()};cw.append(b)});
+   sw.innerHTML='';const n=free?placed.length:k;for(let i=0;i<n;i++){const ci=placed[i],p=n-1-i;const s=el('div','slot'+(ci!=null?' f':'')+(i>0&&p%3===2?' gsp':''),ci!=null?String(deck[ci]):'');s.onclick=()=>{if(ci==null)return;placed.splice(i,1);draw()};sw.append(s)}
+   const s=placed.map(ci=>deck[ci]).join('');
+   if(!s)info.innerHTML='<span class="muted">Kartlara dokun, sayı burada oluşsun. Yerleştirdiğin karta dokunursan geri alırsın.</span>';
+   else if(s[0]==='0'&&s.length>1)info.innerHTML=`⚠️ Sayı <b>0 ile başladı</b>. Bu yazılış aslında ${lenOf(+s)} basamaklı <b>${fmt(+s)}</b> sayısı olur.`;
+   else info.innerHTML=`<b>${fmt(s)}</b> • ${s.length} basamaklı • <b>${+s.slice(-1)%2?'TEK':'ÇİFT'}</b> (birler basamağı ${s.slice(-1)})<br><span class="muted">${cap(words(+s))}</span>`}
+  Object.keys(KTX).forEach(t=>{const b=el('button','btn',cap(KTX[t]));b.onclick=()=>{const ds=placed.map(ci=>deck[ci]);if(ds.length<2){toast('Önce en az 2 kart seç');return}const v=solveCards(ds,t);if(v==null){toast('Bu kartlarla olmuyor');return}
+   const used=[...placed];placed=[];String(v).split('').forEach(c=>{const j=used.find(ci=>deck[ci]===+c&&!placed.includes(ci));placed.push(j)});draw();nova.say(ST.kart.why[t],'wow')};tools.append(b)});
+  const z=el('button','btn','↺ Temizle');z.onclick=()=>{placed=[];draw()};tools.append(z);
+  return {get:()=>placed.map(ci=>deck[ci]).join(''),full:()=>placed.length===k,explore(){free=true;deck=[0,1,2,3,4,5,6,7,8,9];placed=[];tools.classList.remove('hidden');draw()},
+   task(o){free=false;deck=o.ds;k=o.ds.length;placed=[];tools.classList.add('hidden');draw()},showAns(v){placed=[];const s=String(v);[...s].forEach(c=>{const j=deck.findIndex((d,ci)=>d===+c&&!placed.includes(ci));placed.push(j)});draw()}}},
+ why:{max:'Büyük rakamları sola dizdim.',min:'Küçük rakamları sola dizdim; 0 başa gelemediği için en küçük sıfır olmayan rakam başta.',maxOdd:'Birler basamağına en küçük tek rakamı koydum, kalanları büyükten küçüğe dizdim.',minEven:'Birler basamağına uygun çift rakamı koydum, kalanları küçükten büyüğe dizdim (0 başa gelmez).',maxEven:'Birler basamağına en küçük çift rakamı koydum, kalanları büyükten küçüğe dizdim.',minOdd:'Birler basamağına en büyük tek rakamı koydum, kalanları küçükten büyüğe dizdim.'},
+ tasks(){const T=[];['max','min','maxOdd','minEven',pick(['maxEven','minOdd'])].forEach(task=>{let ds;
+   do{ds=shuffle([0,1,2,3,4,5,6,7,8,9]).slice(0,rnd(5,Math.min(8,lenMax())));if(!ds.includes(0))ds[rnd(1,ds.length-1)]=0}while(!ds.some(d=>d%2)||!ds.some(d=>d%2===0)||new Set(ds).size!==ds.length);
+   const ans=solveCards(ds,task);
+   T.push({text:`Kartların hepsini birer kez kullanarak <b>${ds.length} basamaklı ${KTX[task]}</b> doğal sayıyı kur.`,setup:c=>c.task({ds}),
+    check:c=>{const s=c.get();if(!c.full())return{wait:1,msg:'Bütün kartları yerleştir.'};if(s===String(ans))return{ok:true,msg:ST.kart.why[task]};
+     if(s[0]==='0')return{ok:false,msg:'Sayı <b>0 ile başlayamaz</b>! 0\'ı başka bir yere taşı.'};const last=+s.slice(-1);
+     if(/Odd/.test(task)&&last%2===0)return{ok:false,msg:'Sayı <b>tek</b> olmalı: birler basamağına tek bir rakam koy.'};if(/Even/.test(task)&&last%2===1)return{ok:false,msg:'Sayı <b>çift</b> olmalı: birler basamağına çift bir rakam koy.'};
+     return{ok:false,msg:/^max/.test(task)?'Daha büyüğü var! Büyük rakamları sola taşı.'+(task!=='max'?' Birler basamağına hangi rakam en az kayıp verir?':''):'Daha küçüğü var! Küçük rakamları sola taşı (0 başa gelemez).'+(task!=='min'?' Birler basamağındaki rakamı iyi seç.':'')}},
+    show:c=>c.showAns(ans)})});return T}};
+
+/* ---------- İSTASYON MOTORU ---------- */
+let CUR=null;
+function setHash(h){try{if(location.hash!=='#'+h)history.replaceState(null,'','#'+h)}catch(e){try{location.hash=h}catch(_){}}}
+function showHub(){if(CUR&&CUR.ctl.stop)CUR.ctl.stop();CUR=null;activeKeypad=null;$('#labSt').classList.add('hidden');$('#labHub').classList.remove('hidden');renderHub();setHash('lab');window.scrollTo({top:0})}
+function renderHub(){const tot=STORDER.reduce((s,id)=>s+((S.lab||{})[id]||0),0);$('#hubProg').innerHTML=`<b>${tot}</b><span>/ 35 görev</span>`;
+ const h=$('#stations');h.innerHTML='';STORDER.forEach((id,i)=>{const st=ST[id],best=(S.lab||{})[id]||0,md=best>=5?2:best>=3?1:best>0?0:-1;
+  const t=el('button','sttile',`<div class="stth">${thumb(id)}</div><div class="stno">İstasyon ${i+1}</div><h3>${st.title}</h3><p>${st.goal}</p><div class="stfoot"><span class="dots5">${[0,1,2,3,4].map(k=>`<i class="${k<best?'ok':''}"></i>`).join('')}</span>${md>=0?`<span class="medal m${md}">${['Bronz','Gümüş','Altın'][md]}</span>`:'<span class="muted">Başla ▶</span>'}</div>`);
+  t.onclick=()=>openStation(id);h.append(t)})}
+function openStation(id){const st=ST[id];if(!st)return showHub();if(CUR&&CUR.ctl.stop)CUR.ctl.stop();show('lab',true);$('#labHub').classList.add('hidden');const box=$('#labSt');box.classList.remove('hidden');box.innerHTML='';setHash('lab-'+id);
+ const ix=STORDER.indexOf(id),card=el('div','card st');
+ card.innerHTML=`<div class="sthead"><button class="btn" data-back>← İstasyonlar</button><div class="stic">${thumb(id)}</div><div class="stt"><span class="stno">İstasyon ${ix+1} / 7</span><h2>${st.title}</h2><p>${st.goal}</p></div><div class="seg2"><button data-m="explore">🔍 Keşfet</button><button data-m="tasks">🎯 Görevler</button></div></div>
+  <div class="stbody"><div class="stmain"><div class="taskbar hidden"></div><div class="simhost"></div><div class="taskarea"></div><div class="taskctl row center hidden"></div></div><aside class="stside"><div class="novahost"></div><details class="infocard" open><summary>📘 Bilgi kartı</summary><div class="ic">${st.info}</div></details></aside></div>`;
+ box.append(card);const nova=makeNova(card.querySelector('.novahost'));const ctl=st.mount(card.querySelector('.simhost'),nova);
+ CUR={id,st,ctl,nova,card,mode:'explore'};card.querySelector('[data-back]').onclick=showHub;card.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+ if(innerWidth<1000)card.querySelector('.infocard').open=false;setMode('explore');window.scrollTo({top:0})}
+function setMode(m){if(!CUR)return;CUR.mode=m;const c=CUR.card;c.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+ const tb=c.querySelector('.taskbar'),ta=c.querySelector('.taskarea'),tc=c.querySelector('.taskctl');ta.innerHTML='';tc.innerHTML='';ta.classList.remove('locked');c.querySelector('.simhost').classList.remove('hidden');activeKeypad=null;if(CUR.ctl.stop)CUR.ctl.stop();
+ if(m==='explore'){tb.classList.add('hidden');tc.classList.add('hidden');CUR.ctl.explore();CUR.nova.say(CUR.st.intro,'happy')}
+ else{CUR.tasks=CUR.st.tasks();CUR.ti=0;CUR.solved=0;tb.classList.remove('hidden');tc.classList.remove('hidden');showTask()}}
+function taskDots(){return `<div class="dots">${CUR.tasks.map((_,i)=>`<i class="${(CUR.res||[])[i]===1?'ok':(CUR.res||[])[i]===0?'shown':i===CUR.ti?'cur':''}"></i>`).join('')}</div>`}
+function showTask(){const c=CUR.card,t=CUR.tasks[CUR.ti],tb=c.querySelector('.taskbar'),ta=c.querySelector('.taskarea'),tc=c.querySelector('.taskctl');if(CUR.ti===0)CUR.res=[];
+ CUR.tries=0;CUR.done=false;ta.innerHTML='';ta.classList.remove('locked');activeKeypad=null;
+ tb.innerHTML=taskDots()+`<div class="ttext"><span class="tno">Görev ${CUR.ti+1} / ${CUR.tasks.length}</span>${t.text}</div>`;
+ t.setup(CUR.ctl,ta);tc.innerHTML='';const ck=el('button','btn btn-g big','✔ Kontrol et');ck.onclick=checkTask;tc.append(ck);
+ CUR.nova.say(CUR.ti===0?'Görevler başlıyor! Görevi oku ve dene. Yanlış yaparsan sana ipucu veririm.':pick(['Sıradaki görev geldi!','Bunu da yapabilirsin!','Dikkatli oku, sonra dene.']),'think')}
+function nextBtn(tc){tc.innerHTML='';const last=CUR.ti>=CUR.tasks.length-1,nb=el('button','btn btn-p big',last?'🏅 Rozetimi göster':'Sonraki görev ▶');nb.onclick=()=>{CUR.ti++;if(CUR.ti>=CUR.tasks.length)finishTasks();else{showTask();CUR.card.scrollIntoView({behavior:'smooth',block:'start'})}};tc.append(nb);setTimeout(()=>nb.focus({preventScroll:true}),50)}
+function checkTask(){if(!CUR||CUR.mode!=='tasks'||CUR.done)return;const t=CUR.tasks[CUR.ti],r=t.check(CUR.ctl);if(r.wait){CUR.nova.say(r.msg,'think');return}
+ const tc=CUR.card.querySelector('.taskctl'),tb=CUR.card.querySelector('.taskbar');
+ if(r.ok){CUR.done=true;activeKeypad=null;sound('ok');CUR.res[CUR.ti]=1;CUR.solved++;CUR.nova.say(`<b>${pick(PRAISE)}</b><br>${r.msg||''}`,'happy');tb.querySelector('.dots').outerHTML=taskDots();CUR.card.querySelector('.taskarea').classList.add('locked');nextBtn(tc)}
+ else{CUR.tries++;sound('bad');CUR.nova.say(r.msg||'Bir daha dene!','sad');
+  if(CUR.tries>=2&&!tc.querySelector('[data-show]')&&t.show){const sb=el('button','btn','👀 Çözümü göster');sb.dataset.show=1;sb.onclick=()=>{t.show(CUR.ctl);CUR.done=true;activeKeypad=null;CUR.res[CUR.ti]=0;tb.querySelector('.dots').outerHTML=taskDots();CUR.card.querySelector('.taskarea').classList.add('locked');CUR.nova.say('İşte çözüm! '+(t.why||'')+' İncele, sonra devam edelim.','wow');nextBtn(tc)};tc.append(sb)}}}
+function finishTasks(){const sc=CUR.solved,md=sc>=5?2:sc>=3?1:sc>0?0:-1;S.lab=S.lab||{};S.lab[CUR.id]=Math.max(S.lab[CUR.id]||0,sc);save();
+ const c=CUR.card,ta=c.querySelector('.taskarea'),tc=c.querySelector('.taskctl');c.querySelector('.taskbar').innerHTML=taskDots();c.querySelector('.simhost').classList.add('hidden');ta.classList.remove('locked');
+ ta.innerHTML=`<div class="endbox">${md>=0?medalSVG(md):''}<h2>${md===2?'Altın rozet!':md===1?'Gümüş rozet!':md===0?'Bronz rozet!':'Bir tur daha?'}</h2><p class="muted" style="font-size:1.15rem">5 görevden <b>${sc}</b> tanesini kendi başına çözdün.</p></div>`;
+ tc.innerHTML='';const a=el('button','btn btn-a big','↻ Yeni görevler');a.onclick=()=>{c.querySelector('.simhost').classList.remove('hidden');setMode('tasks')};tc.append(a);
+ const ix=STORDER.indexOf(CUR.id);if(ix<STORDER.length-1){const n=el('button','btn btn-p big',`Sonraki: ${ST[STORDER[ix+1]].title} ▶`);n.onclick=()=>openStation(STORDER[ix+1]);tc.append(n)}
+ const h=el('button','btn big','🧪 İstasyonlar');h.onclick=showHub;tc.append(h);
+ CUR.nova.say(md===2?'Muhteşem! Bu istasyonun ustası oldun. 🌟':'Güzel iş! Yeni görevlerle rozetini yükseltebilirsin.','happy');if(md>=1){confetti();sound('win')}}
+
+/* ================= CLASS ================= */
+const TCOL=['#7C3AED','#EA580C','#0284C7','#DB2777'],TDEF=['🚀 Roketler','🌙 Ay Kaşifleri','☄️ Kuyruklu Yıldızlar','🌟 Süpernovalar'];
+let TC=2,C=null,TMR=null;
+function renderClassSetup(){$$('#tcSeg button').forEach(b=>b.classList.toggle('on',+b.dataset.n===TC));const tn=$('#teamNames');const old=$$('#teamNames input').map(i=>i.value);tn.innerHTML='';
+ for(let i=0;i<TC;i++){const w=el('div','row');w.innerHTML=`<span style="width:16px;height:40px;border-radius:6px;background:${TCOL[i]}"></span>`;const inp=el('input');inp.type='text';inp.maxLength=22;inp.value=old[i]||TDEF[i];inp.style.flex='1';inp.setAttribute('aria-label',`${i+1}. takım adı`);w.append(inp);tn.append(w)}}
+function initClass(){const sk=$('#clsSk');PLANETS.forEach(P=>{const l=el('label',null,`<input type="checkbox" value="${P.sk}" checked> ${P.ad}: ${SKILLS[P.sk]}`);sk.append(l)});
+ $$('#tcSeg button').forEach(b=>b.onclick=()=>{TC=+b.dataset.n;renderClassSetup()});renderClassSetup();
+ $('#clsStart').onclick=()=>{const sks=$$('#clsSk input:checked').map(i=>i.value);if(!sks.length){toast('En az bir gezegen seç');return}
+  C={teams:$$('#teamNames input').map((i,k)=>({name:i.value.trim()||TDEF[k],score:0,col:TCOL[k]})),turn:0,round:0,rounds:+$('#clsRounds').value,skills:sks,time:+$('#clsTime').value};
+  $('#clsSetup').classList.add('hidden');$('#clsPlay').classList.remove('hidden');nextClassQ()};
+ $('#clsStop').onclick=()=>{if(C)endClass()}}
+function drawBoard(){$('#clsBoard').innerHTML=C.teams.map((t,i)=>`<div class="team ${i===C.turn?'on':''}" style="background:${t.col}"><span>${t.name}</span><b>${t.score}</b></div>`).join('')}
+function stopTimer(){if(TMR){clearInterval(TMR);TMR=null}}
+function nextClassQ(){stopTimer();if(C.round>=C.rounds)return endClass();const t=C.teams[C.turn];drawBoard();
+ $('#clsTurn').innerHTML=`Sıra: <span style="color:${t.col}">${t.name}</span> • Tur ${C.round+1}/${C.rounds}`;
+ const q=GEN[pick(C.skills)]();const t0=Date.now();
+ const ctl=renderQ(q,$('#clsQ'),ok=>{stopTimer();if(ok){const used=(Date.now()-t0)/1000,bonus=C.time?Math.max(0,Math.round(5*(1-used/C.time))):0;t.score+=10+bonus;drawBoard();toast(`+${10+bonus} puan${bonus?` (hız bonusu +${bonus})`:''}`)}},
+  ()=>{C.turn++;if(C.turn>=C.teams.length){C.turn=0;C.round++}nextClassQ()});
+ const bar=$('#clsTime_i');$('#clsTbar').classList.toggle('hidden',!C.time);bar.style.width='100%';
+ if(C.time){TMR=setInterval(()=>{const left=1-(Date.now()-t0)/1000/C.time;bar.style.width=Math.max(0,left*100)+'%';if(left<=0){stopTimer();if(!ctl.done)ctl.timeout()}},200)}}
+function endClass(){stopTimer();activeKeypad=null;const r=[...C.teams].sort((a,b)=>b.score-a.score),med=['🥇','🥈','🥉','🏅'];drawBoard();$('#clsTurn').innerHTML='🏁 Yarışma bitti!';$('#clsTbar').classList.add('hidden');
+ const h=$('#clsQ');h.innerHTML=`<div class="podium">${r.map((t,i)=>`<div class="pod" style="background:${t.col}"><em>${med[i]}</em>${t.name}<span class="sc">${t.score} puan</span></div>`).join('')}</div>`;
+ const bb=el('div','endbtns');const a=el('button','btn btn-a big','↻ Aynı ayarlarla yeniden');a.onclick=()=>{C.teams.forEach(t=>t.score=0);C.turn=0;C.round=0;nextClassQ()};
+ const s=el('button','btn big','⚙ Ayarlar');s.onclick=()=>{C=null;$('#clsPlay').classList.add('hidden');$('#clsSetup').classList.remove('hidden')};bb.append(a,s);h.append(bb);confetti();sound('win')}
+
+/* ================= REPORT ================= */
+function renderReport(){$('#rpName').textContent=S.name||'Kaşif';let T=0,Cc=0;Object.values(S.skills).forEach(r=>{T+=r.t;Cc+=r.c});
+ const st=Object.values(S.stars).reduce((a,b)=>a+b,0);
+ $('#rpKpi').innerHTML=`<div class="kpi"><b>${T}</b>soru</div><div class="kpi"><b>%${T?Math.round(Cc/T*100):0}</b>başarı</div><div class="kpi"><b>${st}/27</b>yıldız</div>`;
+ $('#rpSkills').innerHTML=PLANETS.map(P=>{const r=S.skills[P.sk],p=r&&r.t?Math.round(r.c/r.t*100):null,col=p==null?'#CBD5E1':p<50?'#DC2626':p<80?'#F97316':'#16A34A';
+  return `<div class="skrow"><div class="planet sm p-${P.id}"></div><div><div class="nm">${P.ad}: ${SKILLS[P.sk]}</div><div class="bar"><i style="width:${p||0}%;background:${col}"></i></div></div><div class="pc" style="color:${col}">${p==null?'—':'%'+p}</div></div>`}).join('');
+ const agg={};Object.values(S.skills).forEach(r=>Object.entries(r.tags||{}).forEach(([t,c])=>agg[t]=(agg[t]||0)+c));const top=Object.entries(agg).filter(([t])=>TAGS[t]).sort((a,b)=>b[1]-a[1]).slice(0,5);
+ $('#rpTags').innerHTML=top.length?top.map(([t,c])=>`<div class="tagitem"><b>${TAGS[t].ad}</b> (${c} kez)<br>${TAGS[t].ip}${TAGS[t].sk?`<br><button class="btn" data-go="${PL_BY_SK[TAGS[t].sk].id}">🚀 ${PL_BY_SK[TAGS[t].sk].ad} görevine git</button>`:''}</div>`).join(''):'<p class="muted">Henüz tespit edilen bir eksik yok. Tanı Görevi ile başlayabilirsin.</p>';
+ $('#rpTags').querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>startPlanet(b.dataset.go))}
+function reportText(){let s=`SAYI GALAKSİSİ – KAŞİF RAPORU\nÖğrenci: ${S.name||'-'}\nTarih: ${new Date().toLocaleDateString('tr-TR')}\n\n`;
+ PLANETS.forEach(P=>{const r=S.skills[P.sk];s+=`${P.ad} – ${SKILLS[P.sk]}: ${r&&r.t?`%${Math.round(r.c/r.t*100)} (${r.c}/${r.t})`:'-'} ${'★'.repeat(S.stars[P.id]||0)}\n`});
+ const agg={};Object.values(S.skills).forEach(r=>Object.entries(r.tags||{}).forEach(([t,c])=>agg[t]=(agg[t]||0)+c));const top=Object.entries(agg).filter(([t])=>TAGS[t]).sort((a,b)=>b[1]-a[1]);
+ if(top.length){s+='\nTespit edilen eksikler:\n';top.forEach(([t,c])=>s+=`- ${TAGS[t].ad}: ${c} kez\n`)}return s}
+$('#rpTani').onclick=startTani;
+$('#rpCopy').onclick=()=>{const t=reportText();try{navigator.clipboard.writeText(t).then(()=>toast('Rapor kopyalandı ✔'),()=>toast('Kopyalanamadı'))}catch(e){toast('Kopyalanamadı')}};
+let rsArm=0;$('#rpReset').onclick=()=>{if(Date.now()-rsArm<3000){S.skills={};S.stars={};save();renderReport();toast('İlerleme sıfırlandı');$('#rpReset').textContent='🗑 Sıfırla';rsArm=0}else{rsArm=Date.now();$('#rpReset').textContent='Emin misin? Tekrar bas';setTimeout(()=>{$('#rpReset').textContent='🗑 Sıfırla'},3000)}};
+
+/* ================= NAV & INIT ================= */
+function show(v,keep){if(v!=='lab'||!keep){if(CUR&&CUR.ctl.stop)CUR.ctl.stop();CUR=null}if(v==='lab'&&!keep){$('#labSt').classList.add('hidden');$('#labHub').classList.remove('hidden');renderHub()}
+ if(!keep){const HN={map:'harita',lab:'lab',class:'yarisma',report:'rapor'};if(HN[v])setHash(HN[v])}
+ ['map','game','lab','class','report'].forEach(k=>$('#v-'+k).classList.toggle('hidden',k!==v));
+ $$('#tabs .tab').forEach(t=>t.classList.toggle('on',t.dataset.v===v||(v==='game'&&t.dataset.v==='map')));
+ if(v!=='game'&&v!=='class')activeKeypad=null;if(v!=='class')stopTimer();
+ if(v==='map')renderMap();if(v==='report')renderReport();window.scrollTo({top:0})}
+$$('#tabs .tab').forEach(t=>t.onclick=()=>{if(t.dataset.v!=='class'&&C&&!$('#clsPlay').classList.contains('hidden')){stopTimer()}show(t.dataset.v)});
+function setLevel(l){S.level=l;save();$$('.seg [data-lv]').forEach(b=>b.classList.toggle('on',+b.dataset.lv===l))}
+$$('.seg [data-lv]').forEach(b=>b.onclick=()=>{setLevel(+b.dataset.lv);toast(S.level==1?'🌱 Sayılar en fazla 9 basamaklı':S.level==3?'🌌 Meydan okuma: sayılar 13–50 basamaklı (trilyon, katrilyon…)':'🚀 Sayılar 12 basamağa kadar')});
+const fxb=()=>{$('#fxBtn').textContent=S.fx!==false?'✨ Animasyon açık':'✨ Animasyon kapalı'};$('#fxBtn').onclick=()=>{S.fx=S.fx===false;save();fxb();skyStart()};
+const sb=()=>{$('#sndBtn').textContent=S.sound?'🔊 Ses açık':'🔇 Ses kapalı'};$('#sndBtn').onclick=()=>{S.sound=!S.sound;save();sb()};
+$('#fsBtn').onclick=()=>{try{if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>toast('Tam ekran açılamadı'));else document.exitFullscreen()}catch(e){toast('Tam ekran desteklenmiyor')}};
+addEventListener('resize',()=>{clearTimeout(window.__rs);window.__rs=setTimeout(skyStart,250)});
+setLevel(S.level||2);sb();fxb();skyStart();initClass();makeNova($('#hubNova')).say('Merhaba, ben <b>Nova</b>! Hangi istasyonu keşfetmek istersin?','happy');
+function route(){const h=(location.hash||'').slice(1);if(h.startsWith('lab-')&&ST[h.slice(4)])openStation(h.slice(4));else if(h==='lab')show('lab');else if(h==='yarisma')show('class');else if(h==='rapor')show('report');else show('map')}
+addEventListener('hashchange',()=>{const h=(location.hash||'').slice(1);if(CUR&&h==='lab-'+CUR.id)return;route()});route();
+</script>
+</body>
+</html>
