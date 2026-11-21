@@ -1,6 +1,6 @@
 # Sayı Galaksisi: Basamak Kaşifleri
 
-5. sınıf matematik, 2. Tema: Sayılar ve Nicelikler. Çok basamaklı doğal sayılar için etkileşimli oyun ve simülasyonlar.
+5\. sınıf matematik, 2. Tema: Sayılar ve Nicelikler. Çok basamaklı doğal sayılar için etkileşimli oyun ve simülasyonlar.
 
 **Oyna:** https://ihsantahiroglu.github.io/sayi-galaksisi/
 
